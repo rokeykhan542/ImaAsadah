@@ -1,713 +1,469 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMA ASADAH | Bespoke Indonesian Couture</title>
-    
+    <title>Ima Asadah | Boutique & Custom Tailor</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Inter:wght@200;300;400;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        :root {
-            --gold: #C5A059;
-            --dark: #0A0A0A;
-            --off-white: #F9F8F6;
+        :root { --brand: #d4a373; }
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        h1, h2, h3, .brand-font { font-family: 'Playfair Display', serif; }
+
+        .offer-gradient {
+            background: linear-gradient(90deg, #d4a373, #e9edc9);
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: var(--off-white);
-            color: var(--dark);
-            overflow-x: hidden;
-            line-height: 1.6;
-            cursor: none; 
-        }
-
-        .font-serif { font-family: 'Bodoni Moda', serif; }
-
-        /* Premium Custom Cursor */
-        #cursor-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--gold);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 10000;
-        }
-        #cursor-outline {
-            width: 40px;
-            height: 40px;
-            border: 1px solid var(--gold);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: width 0.3s, height 0.3s, background 0.3s, border 0.3s;
-        }
-
-        /* Cinematic Mask Reveal */
-        .reveal-text {
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-            display: block;
-            overflow: hidden;
-        }
-        .reveal-text span {
-            display: inline-block;
-            transform: translateY(110%);
-            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
-        }
-        .reveal-text.active span {
-            transform: translateY(0);
-        }
-
-        /* Section Transition */
-        .section-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s cubic-bezier(0.215, 0.61, 0.355, 1);
-        }
-        .section-reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Image Hover Effect */
-        .img-container {
-            position: relative;
-            overflow: hidden;
-            background: #ebebeb;
-        }
-        .img-container img {
-            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        .img-container:hover img {
-            transform: scale(1.08);
-        }
+        .product-card:hover .quick-view { opacity: 1; transform: translateY(0); }
+        .quick-view { transition: all 0.3s ease; opacity: 0; transform: translateY(10px); }
         
-        .nav-scrolled {
-            background: rgba(249, 248, 246, 0.95);
-            backdrop-filter: blur(20px);
-            padding-top: 1.25rem !important;
-            padding-bottom: 1.25rem !important;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.02);
-        }
+        .page-transition { transition: opacity 0.4s ease, transform 0.4s ease; }
+        .hidden-page { display: none !important; opacity: 0; transform: translateY(10px); }
 
-        .page { display: none; }
-        .page.active { display: block; }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: var(--off-white); }
-        ::-webkit-scrollbar-thumb { background: #d1d1d1; border-radius: 10px; }
+        .modal-overlay { background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
         
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-
-        /* Review Card Style */
-        .review-card {
-            background: white;
-            border: 1px solid #eee;
-            transition: all 0.5s ease;
+        /* Custom Animations */
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
-        .review-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            border-color: var(--gold);
-        }
-
-        /* Rating Stars */
-        .star-rating {
-            display: flex;
-            gap: 4px;
-        }
-        .star-active { color: var(--gold); fill: var(--gold); }
-        .star-inactive { color: #E5E7EB; fill: #E5E7EB; }
-
-        /* Footer Link */
-        .footer-link {
-            transition: color 0.3s ease, padding-left 0.3s ease;
-        }
-        .footer-link:hover {
-            color: var(--gold);
-            padding-left: 8px;
-        }
-
-        /* Animation: Floating Sewing Elements */
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
-        }
-        .float-icon { animation: float 6s ease-in-out infinite; }
-        
-        @keyframes pulse-gold {
-            0% { box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.4); }
-            70% { box-shadow: 0 0 0 20px rgba(197, 160, 89, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(197, 160, 89, 0); }
-        }
-        .pulse-active { animation: pulse-gold 2s infinite; }
-
-        /* Building Overlay */
-        #building-status {
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-        #building-status.visible {
-            opacity: 1;
-        }
+        .animate-scale { animation: scaleIn 0.3s ease-out forwards; }
     </style>
 </head>
-<body>
+<body class="bg-white text-gray-900">
 
-    <!-- Dual Cursor System -->
-    <div id="cursor-dot"></div>
-    <div id="cursor-outline"></div>
+    <!-- Promo Banner -->
+    <div class="offer-gradient text-center py-2 px-4 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-white sticky top-0 z-[60]">
+        Limited Offer: Get 10% Off on your first Custom Order!
+    </div>
 
     <!-- Navigation -->
-    <nav id="main-nav" class="fixed top-0 w-full z-50 py-10 px-8 lg:px-16 flex justify-between items-center transition-all duration-700">
-        <div class="flex-1 hidden md:flex space-x-10 text-[9px] uppercase tracking-[0.4em] font-bold">
-            <button onclick="changePage('home')" class="hover:text-gold transition-colors">The Brand</button>
-            <button onclick="changePage('discover')" class="hover:text-gold transition-colors">Lookbook</button>
-        </div>
-        
-        <div class="flex-1 flex justify-center">
-            <h1 onclick="changePage('home')" class="text-2xl lg:text-3xl font-serif tracking-[0.3em] cursor-pointer">IMA ASADAH</h1>
-        </div>
-
-        <div class="flex-1 flex justify-end items-center space-x-8 text-[9px] uppercase tracking-[0.4em] font-bold">
-            <button onclick="changePage('admin')" class="hover:text-gold transition-colors">Admin</button>
-            <button onclick="document.getElementById('custom-order').scrollIntoView({behavior:'smooth'})" class="bg-black text-white px-8 py-3 rounded-full hover:bg-gold transition-all duration-500 shadow-lg">Enquire</button>
+    <nav class="sticky top-0 bg-white/90 backdrop-blur-md z-50 border-b border-gray-100 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="brand-font text-2xl font-bold cursor-pointer" onclick="switchPage('home')">Ima Asadah</div>
+            <div class="hidden md:flex space-x-8 text-[10px] uppercase tracking-widest font-semibold">
+                <a href="javascript:void(0)" onclick="switchPage('home')" class="hover:text-[#d4a373]">Home</a>
+                <a href="javascript:void(0)" onclick="switchPage('catalog')" class="hover:text-[#d4a373]">Catalog</a>
+                <a href="javascript:void(0)" onclick="switchPage('owner')" class="hover:text-[#d4a373]">Our Founder</a>
+                <a href="javascript:void(0)" onclick="switchPage('order')" class="hover:text-[#d4a373]">How to Order</a>
+                <a href="javascript:void(0)" onclick="switchPage('contact')" class="hover:text-[#d4a373]">Contact</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button onclick="switchPage('catalog')" class="hover:scale-110 transition-transform"><i data-lucide="search" class="w-5 h-5"></i></button>
+                <button class="md:hidden"><i data-lucide="menu" class="w-6 h-6"></i></button>
+            </div>
         </div>
     </nav>
 
-    <main>
-        <!-- HOME PAGE -->
-        <div id="page-home" class="page active">
-            
-            <!-- Hero Section -->
-            <section class="min-h-screen flex items-center justify-center pt-20 relative px-8">
-                <div class="container mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                    <div class="lg:col-span-5 z-10">
-                        <div class="reveal-text mb-6">
-                            <span class="text-gold text-[10px] uppercase tracking-[0.6em] font-black">Crafting Modern History</span>
-                        </div>
-                        <div class="reveal-text mb-8">
-                            <h2 class="text-6xl lg:text-8xl font-serif italic leading-[0.9] tracking-tight">
-                                <span>Quiet</span><br><span>Luxury.</span>
-                            </h2>
-                        </div>
-                        <p class="section-reveal text-gray-500 text-sm max-w-sm mb-12 leading-relaxed tracking-wider">
-                            An architectural approach to couture. Every garment is a singular vision, handcrafted for the contemporary spirit in the heart of Jakarta.
-                        </p>
-                        <div class="section-reveal flex gap-6">
-                            <button onclick="changePage('discover')" class="bg-black text-white px-10 py-5 text-[10px] uppercase tracking-[0.4em] font-bold hover:bg-gold transition-all duration-500">Explore</button>
-                            <button onclick="document.getElementById('custom-order').scrollIntoView({behavior:'smooth'})" class="border border-black/10 px-10 py-5 text-[10px] uppercase tracking-[0.4em] font-bold hover:bg-black hover:text-white transition-all duration-500">Custom Build</button>
-                        </div>
-                    </div>
-                    
-                    <div class="lg:col-span-7 relative">
-                        <div class="img-container aspect-[16/10] w-full shadow-2xl overflow-hidden group">
-                            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2000" class="w-full h-full object-cover" alt="Fashion Detail">
-                        </div>
-                    </div>
+    <!-- Home Page -->
+    <main id="home-page" class="page-transition">
+        <!-- Hero -->
+        <section class="h-[70vh] relative flex items-center justify-center text-center text-white">
+            <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&w=2071" class="absolute inset-0 w-full h-full object-cover brightness-75" alt="Hero">
+            <div class="relative z-10 px-6">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6">Effortless Style</h1>
+                <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto font-light">Eksplorasi koleksi pakaian modern dengan sentuhan personalitas unik Anda.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="switchPage('catalog')" class="bg-white text-black px-10 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-[#d4a373] hover:text-white transition-all">Explore Collection</button>
+                    <button onclick="switchPage('owner')" class="bg-transparent border border-white text-white px-10 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-white hover:text-black transition-all">Meet the Designer</button>
                 </div>
-            </section>
-
-            <!-- CUSTOM BUILD SECTION -->
-            <section id="custom-order" class="py-40 bg-white overflow-hidden">
-                <div class="container mx-auto px-8">
-                    <div class="max-w-6xl mx-auto border border-gray-100 bg-gray-50 p-12 lg:p-24 rounded-sm flex flex-col lg:flex-row gap-20 items-center section-reveal relative">
-                        
-                        <!-- Floating Decorative Icons -->
-                        <div class="absolute top-10 right-10 float-icon opacity-10">
-                            <svg class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="0.5" d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"></path><path stroke-width="0.5" d="M15 2H9a1 1 0 00-1 1v2a1 1 0 001 1h6a1 1 0 001-1V3a1 1 0 00-1-1z"></path></svg>
-                        </div>
-
-                        <div class="flex-1 z-10">
-                            <h3 class="text-gold text-[10px] uppercase tracking-[0.6em] font-bold mb-6">Bespoke Portal</h3>
-                            <h2 class="text-5xl font-serif italic mb-8">Build your custom garment.</h2>
-                            <p class="text-gray-500 text-sm mb-10 leading-relaxed">Translate your personal aesthetic into a wearable masterpiece. Select your foundation below to begin the atelier simulation.</p>
-                            
-                            <form class="space-y-6">
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div onclick="triggerBuild('Textile: Fine Silk')" class="p-6 border border-gray-200 bg-white hover:border-gold transition-colors cursor-pointer group">
-                                        <p class="text-[9px] uppercase tracking-widest font-black group-hover:text-gold">Textile</p>
-                                        <p id="selected-textile" class="text-xs text-gray-400 mt-1">Italian Silk</p>
-                                    </div>
-                                    <div onclick="triggerBuild('Silhouette: Draped')" class="p-6 border border-gray-200 bg-white hover:border-gold transition-colors cursor-pointer group">
-                                        <p class="text-[9px] uppercase tracking-widest font-black group-hover:text-gold">Silhouette</p>
-                                        <p id="selected-silhouette" class="text-xs text-gray-400 mt-1">A-Line Draped</p>
-                                    </div>
-                                </div>
-                                <button type="button" onclick="finalizeBuild()" class="w-full bg-black text-white py-6 text-[10px] uppercase tracking-[0.5em] font-bold hover:bg-gold transition-all shadow-xl active:scale-95">Initiate Commission Flow</button>
-                            </form>
-                        </div>
-
-                        <div class="flex-1 w-full relative">
-                            <!-- Main Visualization Image -->
-                            <div class="img-container aspect-[4/5] shadow-2xl rounded-sm group">
-                                <img id="build-preview" src="https://images.unsplash.com/photo-1598559069352-3d8437b0d42c?w=1000" class="w-full h-full object-cover transition-all duration-1000">
-                                
-                                <!-- Building Overlay -->
-                                <div id="building-status" class="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center text-white p-10 text-center">
-                                    <div class="w-16 h-16 border-t-2 border-gold rounded-full animate-spin mb-6"></div>
-                                    <p class="text-[10px] uppercase tracking-[0.6em] font-black text-gold mb-2">Atelier Active</p>
-                                    <p id="status-text" class="text-xs italic font-serif">Weaving Silk Layers...</p>
-                                </div>
-
-                                <!-- Completed Pulse -->
-                                <div id="build-pulse" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-gold rounded-full opacity-0"></div>
-                            </div>
-                            
-                            <!-- Small Floating Fabric Swatch -->
-                            <div class="absolute -bottom-10 -left-10 w-32 h-32 border-8 border-white shadow-2xl float-icon">
-                                <img id="swatch-preview" src="https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=400" class="w-full h-full object-cover">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Signature Grid -->
-            <section class="py-40 px-8 container mx-auto">
-                <div class="flex flex-col md:flex-row justify-between items-baseline mb-20 section-reveal">
-                    <h3 class="text-5xl font-serif italic">Seasonal Curations</h3>
-                    <button onclick="changePage('discover')" class="text-[10px] uppercase tracking-[0.5em] border-b border-black/10 hover:border-gold transition-all">View Full Lookbook</button>
-                </div>
-                <div id="featured-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-                    <!-- Products -->
-                </div>
-            </section>
-
-            <!-- MAISON STORIES (REVIEWS) -->
-            <section class="py-40 bg-black text-white relative overflow-hidden">
-                <div class="container mx-auto px-8">
-                    <div class="flex flex-col md:flex-row justify-between items-center mb-24 section-reveal">
-                        <div>
-                            <h3 class="text-5xl font-serif italic mb-4">Maison Stories</h3>
-                            <p class="text-gold text-[10px] uppercase tracking-[0.6em] font-bold">The Global Community</p>
-                        </div>
-                        <button onclick="toggleModal()" class="mt-8 md:mt-0 px-12 py-5 border border-white/20 rounded-full text-[9px] uppercase tracking-[0.4em] hover:bg-white hover:text-black transition-all duration-500">Submit Your Story</button>
-                    </div>
-                    
-                    <!-- Horizontal Review Track -->
-                    <div id="review-track" class="flex gap-10 overflow-x-auto pb-20 snap-x no-scrollbar">
-                        <!-- Reviews -->
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- LOOKBOOK PAGE -->
-        <div id="page-discover" class="page pt-40 px-8 pb-32">
-            <div class="container mx-auto">
-                <div class="mb-20 section-reveal active">
-                    <h2 class="text-5xl font-serif italic">Collection 24/25</h2>
-                </div>
-                <div id="all-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12"></div>
             </div>
-        </div>
+        </section>
 
-        <!-- ADMIN -->
-        <div id="page-admin" class="page pt-40 px-8 pb-32">
-            <div class="max-w-4xl mx-auto bg-white p-16 rounded-sm border border-gray-100 shadow-2xl">
-                <h2 class="text-3xl font-serif italic mb-10">Queue Management</h2>
-                <div id="admin-list" class="space-y-6"></div>
+        <!-- Special Offers Category (NEW) -->
+        <section class="py-16 bg-stone-900 text-white overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+                    <div>
+                        <span class="text-[#d4a373] text-[10px] font-bold uppercase tracking-[0.3em] mb-2 block">Flash Sale</span>
+                        <h2 class="text-4xl font-bold brand-font">Special Offers</h2>
+                    </div>
+                    <p class="text-gray-400 text-sm max-w-xs md:text-right">Dapatkan potongan harga eksklusif untuk koleksi terpilih hanya di minggu ini.</p>
+                </div>
+                <div id="special-offers-grid" class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <!-- JS will inject offer cards here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Featured Products -->
+        <section class="py-20 px-6 max-w-7xl mx-auto">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-3xl font-bold mb-2">Editor's Picks</h2>
+                    <p class="text-gray-500">Produk pilihan terbaik untuk minggu ini.</p>
+                </div>
+                <button onclick="switchPage('catalog')" class="text-sm font-bold border-b-2 border-black pb-1">View All</button>
+            </div>
+            <div id="featured-grid" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
+        </section>
+
+        <!-- Dynamic Reviews -->
+        <section class="py-20 bg-stone-50 px-6">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-center text-3xl font-bold mb-16">Customer Stories</h2>
+                <div id="reviews-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Owner Page -->
+    <main id="owner-page" class="page-transition hidden-page py-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-16 items-center mb-32">
+                <div class="relative">
+                    <div class="absolute -top-6 -left-6 w-full h-full border-[12px] border-stone-100 rounded-[3rem] -z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800" class="w-full rounded-[2.5rem] shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000" alt="Ima Asadah">
+                </div>
+                <div class="space-y-8">
+                    <div class="space-y-2">
+                        <span class="text-[#d4a373] text-sm font-bold uppercase tracking-[0.3em]">The Visionary</span>
+                        <h2 class="text-6xl font-bold brand-font">Ima Asadah</h2>
+                    </div>
+                    <p class="text-xl text-gray-600 italic font-light leading-relaxed">
+                        "Fashion bukan hanya tentang apa yang Anda pakai, tapi tentang bagaimana Anda bercerita kepada dunia tanpa mengucapkan sepatah kata pun."
+                    </p>
+                    <div class="space-y-6 text-gray-700 leading-relaxed">
+                        <p>Berawal dari sebuah studio kecil pada tahun 2015, Ima Asadah membangun label ini dengan satu misi sederhana: memberikan setiap individu kesempatan untuk memakai pakaian yang benar-benar pas dengan jiwa mereka.</p>
+                        <p>Sebagai seorang perfeksionis, Ima mengawasi setiap tahap produksi—mulai dari pemilihan serat benang hingga sentuhan akhir pada kancing. Keahliannya dalam teknik kustom tailoring telah menjadikannya pilihan utama bagi mereka yang mencari keanggunan yang presisi.</p>
+                    </div>
+                    <div class="flex gap-8 pt-6">
+                        <div>
+                            <p class="text-3xl font-bold">10+</p>
+                            <p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Years Experience</p>
+                        </div>
+                        <div class="w-px h-12 bg-gray-200"></div>
+                        <div>
+                            <p class="text-3xl font-bold">2.5k</p>
+                            <p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Custom Designs</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Philosophy Section -->
+            <div class="bg-stone-900 text-white rounded-[3rem] p-12 md:p-20 text-center space-y-8">
+                <h3 class="text-3xl md:text-4xl brand-font">Filosofi Desain Kami</h3>
+                <div class="grid md:grid-cols-3 gap-12">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto"><i data-lucide="leaf" class="w-6 h-6 text-[#d4a373]"></i></div>
+                        <h4 class="font-bold">Kenyamanan Alami</h4>
+                        <p class="text-sm text-gray-400">Hanya menggunakan serat alami seperti linen dan sutra yang bernapas bersama kulit Anda.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto"><i data-lucide="scissors" class="w-6 h-6 text-[#d4a373]"></i></div>
+                        <h4 class="font-bold">Presisi Tanpa Batas</h4>
+                        <p class="text-sm text-gray-400">Setiap jahitan dihitung untuk memastikan daya tahan dan siluet yang sempurna.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto"><i data-lucide="heart" class="w-6 h-6 text-[#d4a373]"></i></div>
+                        <h4 class="font-bold">Dibuat dengan Cinta</h4>
+                        <p class="text-sm text-gray-400">Setiap pesanan adalah karya seni yang kami hargai dengan perhatian penuh.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-white border-t border-gray-100 pt-32 pb-20 px-8 lg:px-20">
-        <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 mb-32">
-            <div class="lg:col-span-1">
-                <h1 class="text-2xl font-serif tracking-[0.2em] mb-10">IMA ASADAH</h1>
-                <p class="text-xs text-gray-400 leading-loose max-w-xs mb-10">Bespoke craftsmanship for the modern world. Defined by silence, crafted with soul.</p>
-                <div class="flex gap-4">
-                    <div class="w-10 h-10 border border-gray-100 rounded-full flex items-center justify-center hover:border-gold transition-colors cursor-pointer">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                    </div>
-                    <div class="w-10 h-10 border border-gray-100 rounded-full flex items-center justify-center hover:border-gold transition-colors cursor-pointer">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
-                    </div>
+    <!-- Catalog Page -->
+    <main id="catalog-page" class="page-transition hidden-page py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
+                <h2 class="text-4xl font-bold">Shop Collection</h2>
+                <div class="flex gap-4 w-full md:w-auto">
+                    <select id="cat-filter" onchange="renderCatalog()" class="flex-1 md:flex-none border border-gray-200 rounded-full px-6 py-2 text-sm outline-none">
+                        <option value="all">All Categories</option>
+                        <option value="Dresses">Dresses</option>
+                        <option value="Outerwear">Outerwear</option>
+                        <option value="Tops">Tops</option>
+                    </select>
+                    <select id="sort-order" onchange="renderCatalog()" class="flex-1 md:flex-none border border-gray-200 rounded-full px-6 py-2 text-sm outline-none">
+                        <option value="new">Newest</option>
+                        <option value="low">Price: Low-High</option>
+                        <option value="high">Price: High-Low</option>
+                    </select>
                 </div>
             </div>
-            
-            <div>
-                <h4 class="text-[9px] uppercase tracking-[0.4em] font-black mb-10">Maison</h4>
-                <ul class="space-y-6">
-                    <li><button onclick="changePage('home')" class="footer-link text-xs text-gray-400 uppercase tracking-widest">Heritage</button></li>
-                    <li><button onclick="changePage('discover')" class="footer-link text-xs text-gray-400 uppercase tracking-widest">Collection</button></li>
-                    <li><button class="footer-link text-xs text-gray-400 uppercase tracking-widest">Craftsmanship</button></li>
-                    <li><button class="footer-link text-xs text-gray-400 uppercase tracking-widest">Sustainable Ethos</button></li>
-                </ul>
-            </div>
-
-            <div>
-                <h4 class="text-[9px] uppercase tracking-[0.4em] font-black mb-10">Concierge</h4>
-                <ul class="space-y-6">
-                    <li><button class="footer-link text-xs text-gray-400 uppercase tracking-widest">Book Fitting</button></li>
-                    <li><button class="footer-link text-xs text-gray-400 uppercase tracking-widest">Care Guide</button></li>
-                    <li><button class="footer-link text-xs text-gray-400 uppercase tracking-widest">Gift Portal</button></li>
-                    <li><button class="footer-link text-xs text-gray-400 uppercase tracking-widest">Contact Atelier</button></li>
-                </ul>
-            </div>
-
-            <div>
-                <h4 class="text-[9px] uppercase tracking-[0.4em] font-black mb-10">Locations</h4>
-                <div class="space-y-8">
-                    <div>
-                        <p class="text-[9px] uppercase tracking-widest font-bold mb-1">Jakarta Atelier</p>
-                        <p class="text-[10px] text-gray-400">Jl. Kemang Raya No. 42, Jakarta Selatan</p>
-                    </div>
-                    <div>
-                        <p class="text-[9px] uppercase tracking-widest font-bold mb-1">Singapore Studio</p>
-                        <p class="text-[10px] text-gray-400">30 Orchard Rd, Singapore</p>
-                    </div>
-                </div>
-            </div>
+            <div id="catalog-grid" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
         </div>
-        
-        <div class="container mx-auto pt-20 border-t border-gray-50 flex flex-col md:flex-row justify-between items-center text-[8px] uppercase tracking-[0.3em] text-gray-300">
-            <p>© 2024 IMA ASADAH COUTURE. ALL RIGHTS RESERVED.</p>
-            <div class="flex gap-10 mt-6 md:mt-0">
-                <a href="#" class="hover:text-gold">Privacy Policy</a>
-                <a href="#" class="hover:text-gold">Terms of Service</a>
-            </div>
-        </div>
-    </footer>
+    </main>
 
-    <!-- Modal for Submitting Stories -->
-    <div id="modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-6 backdrop-blur-3xl">
-        <div class="bg-white w-full max-w-xl p-12 lg:p-16 rounded-sm relative shadow-2xl">
-            <button onclick="toggleModal()" class="absolute top-8 right-8 text-gray-300 hover:text-black transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-            <h3 class="text-3xl font-serif italic mb-10">Share Your Story</h3>
-            <form onsubmit="handleReviewSubmit(event)" class="space-y-8">
-                <div class="grid grid-cols-2 gap-8">
-                    <input id="rev-name" type="text" placeholder="NAME" class="w-full border-b py-4 outline-none text-[10px] tracking-widest uppercase focus:border-gold" required>
-                    <input id="rev-location" type="text" placeholder="LOCATION" class="w-full border-b py-4 outline-none text-[10px] tracking-widest uppercase focus:border-gold">
-                </div>
-                
+    <!-- How to Order Page -->
+    <main id="order-page" class="page-transition hidden-page py-20 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-12">How to Order</h2>
+            <div class="grid md:grid-cols-3 gap-12">
                 <div class="space-y-4">
-                    <p class="text-[8px] uppercase tracking-widest font-black text-gray-400">Atmosphere Rating</p>
-                    <div class="flex gap-4" id="star-selector">
-                        <button type="button" onclick="setRating(1)" class="star-btn transition-transform hover:scale-125" data-val="1">
-                            <svg class="w-6 h-6 star-inactive" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                        </button>
-                        <button type="button" onclick="setRating(2)" class="star-btn transition-transform hover:scale-125" data-val="2">
-                            <svg class="w-6 h-6 star-inactive" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                        </button>
-                        <button type="button" onclick="setRating(3)" class="star-btn transition-transform hover:scale-125" data-val="3">
-                            <svg class="w-6 h-6 star-inactive" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                        </button>
-                        <button type="button" onclick="setRating(4)" class="star-btn transition-transform hover:scale-125" data-val="4">
-                            <svg class="w-6 h-6 star-inactive" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                        </button>
-                        <button type="button" onclick="setRating(5)" class="star-btn transition-transform hover:scale-125" data-val="5">
-                            <svg class="w-6 h-6 star-inactive" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                        </button>
-                    </div>
+                    <div class="w-16 h-16 bg-[#d4a373] text-white rounded-full flex items-center justify-center mx-auto text-xl font-bold shadow-lg">1</div>
+                    <h3 class="font-bold">Pilih Produk</h3>
+                    <p class="text-gray-500 text-sm">Cari produk favorit Anda di katalog atau konsultasikan desain kustom.</p>
                 </div>
+                <div class="space-y-4">
+                    <div class="w-16 h-16 bg-[#d4a373] text-white rounded-full flex items-center justify-center mx-auto text-xl font-bold shadow-lg">2</div>
+                    <h3 class="font-bold">Hubungi Admin</h3>
+                    <p class="text-gray-500 text-sm">Klik tombol WhatsApp untuk konfirmasi stok dan detail ukuran.</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="w-16 h-16 bg-[#d4a373] text-white rounded-full flex items-center justify-center mx-auto text-xl font-bold shadow-lg">3</div>
+                    <h3 class="font-bold">Pembayaran</h3>
+                    <p class="text-gray-500 text-sm">Lakukan pembayaran dan pesanan Anda akan segera diproses atau dikirim.</p>
+                </div>
+            </div>
+        </div>
+    </main>
 
-                <textarea id="rev-text" placeholder="THE EXPERIENCE..." rows="2" class="w-full border-b py-4 outline-none text-[10px] tracking-widest uppercase focus:border-gold" required></textarea>
-                
-                <div class="border border-dashed border-gray-200 p-12 text-center relative group hover:border-gold transition-colors">
-                    <input type="file" class="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" onchange="previewFile(this)">
-                    <img id="modal-preview" src="" class="absolute inset-0 w-full h-full object-cover hidden">
-                    <div id="preview-placeholder">
-                        <svg class="w-10 h-10 mx-auto mb-4 text-gray-200 group-hover:text-gold transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        <span class="text-[9px] text-gray-400 uppercase tracking-widest group-hover:text-gold transition-colors">Upload a Photo or Screenshot</span>
+    <!-- Contact & Map Page -->
+    <main id="contact-page" class="page-transition hidden-page py-20 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <h2 class="text-5xl font-bold brand-font">Get in Touch</h2>
+                    <p class="text-gray-500">Silakan kunjungi butik kami atau hubungi kami melalui media sosial.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 bg-stone-100 rounded-full"><i data-lucide="map-pin" class="w-5 h-5 text-[#d4a373]"></i></div>
+                            <div>
+                                <p class="font-bold">Atelier Address</p>
+                                <p class="text-sm text-gray-500">Jl. Fashionista No. 123, Jakarta Selatan, Indonesia</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 bg-stone-100 rounded-full"><i data-lucide="mail" class="w-5 h-5 text-[#d4a373]"></i></div>
+                            <div>
+                                <p class="font-bold">Email Us</p>
+                                <p class="text-sm text-gray-500">hello@imaasadah.com</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <button class="w-full bg-black text-white py-6 text-[10px] uppercase tracking-[0.5em] font-bold hover:bg-gold transition-colors">Confirm Submission</button>
-            </form>
+                <div class="h-[400px] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126916.03964951232!2d106.7892128!3d-6.2444697!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f14d30079f01%3A0x2ef3bb63d5964098!2sJakarta%20Selatan%2C%20Kota%20Jakarta%20Selatan%2C%20Daerah%20Khusus%20Ibukota%20Jakarta!5e0!3m2!1sid!2sid!4v1704510000000!5m2!1sid!2sid" 
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Product View Popup -->
+    <div id="product-modal" class="modal-overlay fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl relative flex flex-col md:flex-row animate-scale">
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-10 bg-white/80 p-2 rounded-full hover:bg-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <div class="w-full md:w-1/2 aspect-square">
+                <img id="modal-img" src="" class="w-full h-full object-cover">
+            </div>
+            <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                <div id="modal-tag" class="hidden mb-4">
+                    <span class="bg-[#d4a373] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">Limited Offer</span>
+                </div>
+                <h3 id="modal-title" class="text-3xl font-bold mb-2">Product Title</h3>
+                <p id="modal-price" class="text-xl text-[#d4a373] font-semibold mb-6">Rp 0</p>
+                <div class="text-gray-600 text-sm leading-relaxed mb-8 space-y-4">
+                    <p id="modal-desc">Detailed product description goes here...</p>
+                </div>
+                <button onclick="orderWhatsApp()" class="w-full bg-black text-white py-4 rounded-full font-bold hover:bg-[#d4a373] transition-colors flex items-center justify-center gap-2">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i> Order via WhatsApp
+                </button>
+            </div>
         </div>
     </div>
 
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/6285732335094" target="_blank" class="fixed bottom-8 right-8 bg-[#25d366] text-white p-4 rounded-full shadow-xl hover:scale-110 transition-transform z-50">
+        <i data-lucide="message-circle" class="w-6 h-6"></i>
+    </a>
+
     <script>
         const products = [
-            { id: 1, name: "Ivory Silk Kaftan", price: 4200000, cat: "Atelier", img: "https://images.unsplash.com/photo-1544441893-675973e31985?w=800" },
-            { id: 2, name: "Gold Thread Blouse", price: 2850000, cat: "Limited", img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800" },
-            { id: 3, name: "Midnight Satin Gown", price: 5900000, cat: "Bespoke", img: "https://images.unsplash.com/photo-1518767761162-1593c3076d78?w=800" },
-            { id: 4, name: "Signature Wrap", price: 3100000, cat: "Essential", img: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800" }
+            { id: 1, name: "Linen Gathered Dress", price: 450000, oldPrice: 550000, category: "Dresses", img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600", offer: true, desc: "Dress premium dari bahan linen pilihan yang sejuk dan jatuh. Cocok untuk acara outdoor maupun casual gathering." },
+            { id: 2, name: "Silk Wrap Blouse", price: 320000, oldPrice: null, category: "Tops", img: "https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=600", offer: false, desc: "Blouse sutra dengan model wrap yang elegan, memberikan kesan mewah dan feminin." },
+            { id: 3, name: "Autumn Trench Coat", price: 650000, oldPrice: 780000, category: "Outerwear", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600", offer: true, desc: "Outerwear ikonik untuk tampilan profesional. Tahan angin dan stylish di segala suasana." },
+            { id: 4, name: "Minimalist Camisole", price: 185000, oldPrice: null, category: "Tops", img: "https://images.unsplash.com/photo-1604176354204-926873ff3da9?w=600", offer: false, desc: "Basic camisole yang wajib dimiliki. Nyaman digunakan sebagai dalaman atau atasan casual." },
+            { id: 5, name: "Pleated Midi Skirt", price: 295000, oldPrice: null, category: "Bottoms", img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600", offer: false, desc: "Rok plisket dengan potongan midi yang timeless. Mudah dipadupadankan." },
+            { id: 6, name: "Satin Evening Dress", price: 680000, oldPrice: 850000, category: "Dresses", img: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=600", offer: true, desc: "Koleksi pesta eksklusif dengan detail satin mengkilap yang memikat perhatian." }
         ];
 
-        let reviews = [
-            { name: "Siti A.", location: "Singapore", text: "The fit is truly exquisite. I wore it for my exhibition opening.", status: 'approved', rating: 5, img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600", isScreenshot: false },
-            { name: "Sarah M.", location: "Jakarta", text: "Look at this detail! 😭 Pure art.", status: 'approved', rating: 5, img: "https://images.unsplash.com/photo-1529139572765-397392efef91?w=600", isScreenshot: true },
-            { name: "Elena R.", location: "London", text: "Truly a breathtaking unboxing experience.", status: 'approved', rating: 4, img: "https://images.unsplash.com/photo-1502323777036-f29e3972d82f?w=600", isScreenshot: false }
+        const reviews = [
+            { 
+                name: "Saraswati", 
+                rating: 5, 
+                text: "Jahitannya sangat rapi, benar-benar butik kualitasnya. Admin juga sangat membantu saat konsultasi ukuran.", 
+                timestamp: new Date(Date.now() - 172800000).toISOString(),
+                proofImg: "https://images.unsplash.com/photo-1574634534894-89d7576c8259?auto=format&fit=crop&q=80&w=400"
+            },
+            { 
+                name: "Amanda L.", 
+                rating: 5, 
+                text: "Outer-nya cantik banget! Bahannya jatuh dan nggak gampang kusut. Pas banget buat kerja.", 
+                timestamp: new Date(Date.now() - 604800000).toISOString(),
+                proofImg: null 
+            },
+            { 
+                name: "Fitri Ramadhani", 
+                rating: 4, 
+                text: "Custom dress-nya jadi tepat waktu. Warnanya persis seperti di foto catalog.", 
+                timestamp: new Date(Date.now() - 1209600000).toISOString(),
+                proofImg: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400"
+            }
         ];
 
-        let currentRating = 5;
+        let activeProduct = null;
 
-        // Custom Build Animation Logic
-        const buildOptions = {
-            textiles: [
-                { name: "Fine Italian Silk", img: "https://images.unsplash.com/photo-1598559069352-3d8437b0d42c?w=1000", swatch: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=400" },
-                { name: "Traditional Hand-loomed Ikat", img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000", swatch: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=400" },
-                { name: "Gold Dust Brocade", img: "https://images.unsplash.com/photo-1544441892-0b19114d5671?w=1000", swatch: "https://images.unsplash.com/photo-1606132226766-4858510a957b?w=400" }
-            ],
-            statuses: [
-                "Drafting unique patterns...",
-                "Calibrating textile tension...",
-                "Mapping artisanal threadwork...",
-                "Simulation complete."
-            ]
-        };
-
-        let buildStep = 0;
-
-        function triggerBuild(label) {
-            const statusBox = document.getElementById('building-status');
-            const statusText = document.getElementById('status-text');
-            const preview = document.getElementById('build-preview');
-            const swatch = document.getElementById('swatch-preview');
-            
-            // Show building overlay
-            statusBox.classList.add('visible');
-            
-            // Randomize selection for simulation
-            const textile = buildOptions.textiles[Math.floor(Math.random() * buildOptions.textiles.length)];
-            
-            let i = 0;
-            const interval = setInterval(() => {
-                statusText.innerText = buildOptions.statuses[i];
-                i++;
-                if (i >= buildOptions.statuses.length) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        statusBox.classList.remove('visible');
-                        preview.src = textile.img;
-                        swatch.src = textile.swatch;
-                        
-                        // Pulse Effect
-                        const pulse = document.getElementById('build-pulse');
-                        pulse.classList.add('pulse-active');
-                        pulse.style.opacity = "1";
-                        setTimeout(() => {
-                            pulse.classList.remove('pulse-active');
-                            pulse.style.opacity = "0";
-                        }, 2000);
-
-                        if(label.includes('Textile')) document.getElementById('selected-textile').innerText = textile.name;
-                    }, 500);
-                }
-            }, 600);
+        function formatRelativeTime(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+            const diffInDays = Math.floor(diffInSeconds / 86400);
+            if (diffInDays === 0) return "Today";
+            if (diffInDays === 1) return "Yesterday";
+            if (diffInDays < 7) return `${diffInDays} days ago`;
+            if (diffInDays < 30) return `${Math.floor(diffInDays / 7)} weeks ago`;
+            return date.toLocaleDateString();
         }
 
-        function finalizeBuild() {
-            const btn = event.currentTarget;
-            const originalText = btn.innerText;
-            btn.innerText = "PREPARING ATELIER FILES...";
-            btn.style.background = "#C5A059";
-            
+        function switchPage(pageId) {
+            const pageIds = ['home-page', 'catalog-page', 'order-page', 'contact-page', 'owner-page'];
+            pageIds.forEach(id => {
+                const p = document.getElementById(id);
+                if (p) {
+                    p.classList.add('hidden-page');
+                    setTimeout(() => { if (p.classList.contains('hidden-page')) p.style.display = 'none'; }, 400);
+                }
+            });
             setTimeout(() => {
-                btn.innerText = "COMMISSION PACKET SENT";
-                btn.style.background = "#000";
-                setTimeout(() => btn.innerText = originalText, 3000);
-            }, 2000);
-        }
-
-        // Rating Logic
-        function setRating(val) {
-            currentRating = val;
-            const buttons = document.querySelectorAll('.star-btn');
-            buttons.forEach((btn, idx) => {
-                const svg = btn.querySelector('svg');
-                if (idx < val) {
-                    svg.classList.add('star-active');
-                    svg.classList.remove('star-inactive');
-                } else {
-                    svg.classList.remove('star-active');
-                    svg.classList.add('star-inactive');
+                const target = document.getElementById(`${pageId}-page`);
+                if (target) {
+                    target.style.display = 'block';
+                    setTimeout(() => target.classList.remove('hidden-page'), 50);
                 }
-            });
-        }
-
-        function getStarHtml(rating) {
-            let html = '<div class="star-rating mb-3">';
-            for(let i=0; i<5; i++) {
-                html += `<svg class="w-3 h-3 ${i < rating ? 'star-active' : 'star-inactive'}" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
-            }
-            html += '</div>';
-            return html;
-        }
-
-        // Advanced Cursor System
-        let mouseX = 0, mouseY = 0, dotX = 0, dotY = 0, outlineX = 0, outlineY = 0;
-        function initCursor() {
-            const dot = document.getElementById('cursor-dot');
-            const outline = document.getElementById('cursor-outline');
-            window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
-            function animateCursor() {
-                dotX += (mouseX - dotX) * 1; dotY += (mouseY - dotY) * 1;
-                outlineX += (mouseX - outlineX) * 0.15; outlineY += (mouseY - outlineY) * 0.15;
-                dot.style.left = dotX + 'px'; dot.style.top = dotY + 'px'; dot.style.transform = `translate(-50%, -50%)`;
-                outline.style.left = outlineX + 'px'; outline.style.top = outlineY + 'px'; outline.style.transform = `translate(-50%, -50%)`;
-                requestAnimationFrame(animateCursor);
-            }
-            animateCursor();
-            const targets = 'button, a, .img-container, input, textarea, h1, .star-btn, .cursor-pointer';
-            document.body.addEventListener('mouseover', (e) => {
-                if (e.target.closest(targets)) {
-                    outline.style.width = '70px'; outline.style.height = '70px';
-                    outline.style.background = 'rgba(197, 160, 89, 0.1)'; outline.style.border = '1px solid transparent';
-                }
-            });
-            document.body.addEventListener('mouseout', (e) => {
-                if (e.target.closest(targets)) {
-                    outline.style.width = '40px'; outline.style.height = '40px';
-                    outline.style.background = 'transparent'; outline.style.border = '1px solid var(--gold)';
-                }
-            });
-        }
-
-        // Observer
-        let observer = null;
-        function initObserver() {
-            if (observer) observer.disconnect();
-            observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        entry.target.querySelectorAll('span').forEach(s => s.style.transform = 'translateY(0)');
-                    }
-                });
-            }, { threshold: 0.15 });
-            document.querySelectorAll('.section-reveal, .reveal-text').forEach(el => observer.observe(el));
-        }
-
-        function renderAll() {
-            const grid = document.getElementById('featured-grid');
-            const lookbook = document.getElementById('all-products-grid');
-            const html = products.map((p, i) => `
-                <div class="section-reveal group" style="transition-delay: ${i * 100}ms">
-                    <div class="img-container aspect-[3/4] mb-8 shadow-sm">
-                        <img src="${p.img}" class="w-full h-full object-cover grayscale group-hover:grayscale-0" alt="${p.name}">
-                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-black/10">
-                            <span class="text-[9px] text-white uppercase tracking-[0.4em] font-bold border border-white/30 px-6 py-3 backdrop-blur-sm">Enquire</span>
-                        </div>
-                    </div>
-                    <p class="text-[8px] uppercase tracking-[0.5em] text-gold font-black mb-3">${p.cat}</p>
-                    <h4 class="text-[11px] uppercase tracking-[0.4em] mb-3">${p.name}</h4>
-                    <p class="font-serif italic text-xl">IDR ${new Intl.NumberFormat('id-ID').format(p.price)}</p>
-                </div>
-            `).join('');
-            if(grid) grid.innerHTML = html;
-            if(lookbook) lookbook.innerHTML = html;
-            renderReviews();
-            renderAdmin();
-            setTimeout(initObserver, 150);
-        }
-
-        function renderReviews() {
-            const track = document.getElementById('review-track');
-            if(!track) return;
-            track.innerHTML = reviews.filter(r => r.status === 'approved').map(r => `
-                <div class="snap-start min-w-[340px] section-reveal">
-                    <div class="review-card p-2 rounded-sm overflow-hidden h-full">
-                        <div class="img-container aspect-[4/5] rounded-sm overflow-hidden mb-8">
-                            <img src="${r.img}" class="w-full h-full object-cover">
-                            ${r.isScreenshot ? '<div class="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-3 py-1 text-[8px] uppercase tracking-widest rounded-full">User Reference</div>' : ''}
-                        </div>
-                        <div class="px-6 pb-8">
-                            <div class="flex justify-between items-center mb-2">
-                                <p class="text-gold text-[9px] uppercase tracking-[0.4em] font-black">${r.name}</p>
-                                <p class="text-[8px] text-gray-400 uppercase tracking-widest">${r.location || 'Bespoke'}</p>
-                            </div>
-                            ${getStarHtml(r.rating)}
-                            <p class="text-xs text-gray-500 italic leading-relaxed">"${r.text}"</p>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderAdmin() {
-            const list = document.getElementById('admin-list');
-            if(!list) return;
-            const pending = reviews.map((r, i) => ({...r, id: i})).filter(r => r.status === 'pending');
-            list.innerHTML = pending.length ? pending.map(r => `
-                <div class="flex items-center justify-between p-8 bg-gray-50 border border-gray-100 rounded-sm">
-                    <div class="flex items-center gap-8">
-                        <img src="${r.img}" class="w-16 h-20 object-cover shadow-xl">
-                        <div>
-                            <p class="text-[10px] font-black uppercase tracking-widest">${r.name} (${r.location})</p>
-                            <p class="text-[9px] text-gray-400 mt-2">${r.text}</p>
-                            <div class="mt-2 flex gap-1">${getStarHtml(r.rating)}</div>
-                        </div>
-                    </div>
-                    <div class="flex gap-4">
-                        <button onclick="updateReview(${r.id}, 'approved')" class="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center hover:bg-gold transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M5 13l4 4L19 7"></path></svg></button>
-                        <button onclick="updateReview(${r.id}, 'discard')" class="w-12 h-12 border border-gray-200 rounded-full flex items-center justify-center hover:bg-red-50 text-red-500 transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
-                    </div>
-                </div>
-            `).join('') : '<p class="text-center py-20 text-[9px] uppercase tracking-widest text-gray-300">Queue Clear</p>';
-        }
-
-        function changePage(id) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page-' + id).classList.add('active');
+            }, 400);
+            if (pageId === 'catalog') renderCatalog();
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            setTimeout(initObserver, 200);
         }
 
-        function toggleModal() {
-            document.getElementById('modal').classList.toggle('hidden');
-            setRating(5);
+        function createProductCard(p, isDark = false) {
+            const card = document.createElement('div');
+            card.className = "product-card group cursor-pointer animate-scale";
+            card.onclick = () => openModal(p);
+            
+            const priceHtml = p.oldPrice 
+                ? `<div class="flex items-center gap-2">
+                    <span class="text-[#d4a373] font-semibold text-sm">Rp ${p.price.toLocaleString()}</span>
+                    <span class="text-gray-400 text-xs line-through">Rp ${p.oldPrice.toLocaleString()}</span>
+                   </div>`
+                : `<p class="text-[#d4a373] font-semibold text-sm">Rp ${p.price.toLocaleString()}</p>`;
+
+            card.innerHTML = `
+                <div class="relative aspect-[3/4] overflow-hidden rounded-2xl ${isDark ? 'bg-stone-800' : 'bg-gray-100'} mb-4">
+                    <img src="${p.img}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    ${p.offer ? `<div class="absolute top-4 left-4 bg-[#d4a373] text-white text-[9px] font-bold px-3 py-1 rounded-full uppercase">Save Rp ${(p.oldPrice - p.price).toLocaleString()}</div>` : ''}
+                    <div class="quick-view absolute inset-0 bg-black/20 flex items-center justify-center">
+                        <span class="bg-white text-black px-6 py-2 rounded-full text-[10px] font-bold uppercase shadow-xl">Quick View</span>
+                    </div>
+                </div>
+                <div class="px-1">
+                    <p class="text-[10px] ${isDark ? 'text-gray-500' : 'text-gray-400'} uppercase tracking-widest mb-1">${p.category}</p>
+                    <h3 class="font-bold text-sm mb-1 truncate ${isDark ? 'text-white' : 'text-black'}">${p.name}</h3>
+                    ${priceHtml}
+                </div>
+            `;
+            return card;
         }
 
-        function previewFile(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const preview = document.getElementById('modal-preview');
-                    preview.src = e.target.result;
-                    preview.classList.remove('hidden');
-                    document.getElementById('preview-placeholder').classList.add('hidden');
-                };
-                reader.readAsDataURL(input.files[0]);
+        function renderHome() {
+            const grid = document.getElementById('featured-grid');
+            const offerGrid = document.getElementById('special-offers-grid');
+            
+            if (grid) {
+                grid.innerHTML = '';
+                products.slice(0, 4).forEach(p => grid.appendChild(createProductCard(p)));
             }
+
+            if (offerGrid) {
+                offerGrid.innerHTML = '';
+                const offerItems = products.filter(p => p.offer).slice(0, 3);
+                offerItems.forEach(p => offerGrid.appendChild(createProductCard(p, true)));
+            }
+
+            const reviewGrid = document.getElementById('reviews-grid');
+            if (reviewGrid) {
+                reviewGrid.innerHTML = '';
+                reviews.forEach(r => {
+                    const div = document.createElement('div');
+                    div.className = "bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col h-full";
+                    div.innerHTML = `
+                        <div class="flex text-yellow-400 mb-4">${'<i data-lucide="star" class="w-4 h-4 fill-current"></i>'.repeat(r.rating)}</div>
+                        <p class="text-gray-600 text-sm italic mb-6 flex-grow">"${r.text}"</p>
+                        ${r.proofImg ? `<img src="${r.proofImg}" class="w-full h-32 object-cover rounded-xl mb-4 border border-stone-100" alt="Proof">` : ''}
+                        <div class="flex items-center gap-3 pt-4 border-t border-stone-50">
+                            <div class="w-10 h-10 rounded-full bg-[#d4a373] text-white flex items-center justify-center font-bold text-xs">${r.name[0]}</div>
+                            <div>
+                                <p class="text-sm font-bold">${r.name}</p>
+                                <p class="text-[10px] text-gray-400 uppercase tracking-tighter">${formatRelativeTime(r.timestamp)}</p>
+                            </div>
+                        </div>
+                    `;
+                    reviewGrid.appendChild(div);
+                });
+            }
+            lucide.createIcons();
         }
 
-        function handleReviewSubmit(e) {
-            e.preventDefault();
-            reviews.unshift({
-                name: document.getElementById('rev-name').value,
-                location: document.getElementById('rev-location').value,
-                text: document.getElementById('rev-text').value,
-                rating: currentRating,
-                status: 'pending',
-                isScreenshot: true,
-                img: document.getElementById('modal-preview').src || 'https://via.placeholder.com/800'
-            });
-            toggleModal();
-            renderAll();
-            e.target.reset();
-            document.getElementById('modal-preview').classList.add('hidden');
-            document.getElementById('preview-placeholder').classList.remove('hidden');
+        function renderCatalog() {
+            const grid = document.getElementById('catalog-grid');
+            if (!grid) return;
+            const cat = document.getElementById('cat-filter').value;
+            const sort = document.getElementById('sort-order').value;
+            let list = cat === 'all' ? [...products] : products.filter(p => p.category === cat);
+            if (sort === 'low') list.sort((a,b) => a.price - b.price);
+            if (sort === 'high') list.sort((a,b) => b.price - a.price);
+            grid.innerHTML = '';
+            list.forEach(p => grid.appendChild(createProductCard(p)));
+            lucide.createIcons();
         }
 
-        function updateReview(id, status) {
-            if(status === 'discard') reviews.splice(id, 1);
-            else reviews[id].status = status;
-            renderAll();
+        function openModal(p) {
+            activeProduct = p;
+            document.getElementById('modal-img').src = p.img;
+            document.getElementById('modal-title').innerText = p.name;
+            
+            const priceEl = document.getElementById('modal-price');
+            if (p.oldPrice) {
+                priceEl.innerHTML = `Rp ${p.price.toLocaleString()} <span class="text-gray-400 text-sm line-through ml-2 font-normal">Rp ${p.oldPrice.toLocaleString()}</span>`;
+            } else {
+                priceEl.innerText = `Rp ${p.price.toLocaleString()}`;
+            }
+
+            document.getElementById('modal-desc').innerText = p.desc;
+            document.getElementById('modal-tag').style.display = p.offer ? 'block' : 'none';
+            document.getElementById('product-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
         }
 
-        window.onload = () => {
-            initCursor();
-            renderAll();
-            window.addEventListener('scroll', () => {
-                const nav = document.getElementById('main-nav');
-                if (window.scrollY > 100) nav.classList.add('nav-scrolled');
-                else nav.classList.remove('nav-scrolled');
-            });
-        };
+        function closeModal() {
+            document.getElementById('product-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function orderWhatsApp() {
+            if (!activeProduct) return;
+            const text = `Halo Ima Asadah! Saya tertarik dengan "${activeProduct.name}". Bisakah saya berkonsultasi tentang ukuran?`;
+            window.open(`https://wa.me/6285732335094?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        window.onload = () => { renderHome(); lucide.createIcons(); }
     </script>
 </body>
 </html>
