@@ -3,276 +3,345 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ima Asadah | Boutique & Custom Tailor</title>
+    <title>Ima Asadah | Luxury Atelier</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        :root { --brand: #d4a373; }
-        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
-        h1, h2, h3, .brand-font { font-family: 'Playfair Display', serif; }
-
-        .offer-gradient {
-            background: linear-gradient(90deg, #d4a373, #e9edc9);
-            background-size: 200% 200%;
-            animation: gradientShift 4s ease infinite;
-        }
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .product-card:hover .quick-view { opacity: 1; transform: translateY(0); }
-        .quick-view { transition: all 0.3s ease; opacity: 0; transform: translateY(10px); }
+        :root { --brand: #d4a373; --dark: #1c1917; --soft-bg: #fafaf9; --offer: #9f1239; }
         
-        .page-transition { transition: opacity 0.4s ease, transform 0.4s ease; }
-        .hidden-page { display: none !important; opacity: 0; transform: translateY(10px); }
-
-        .modal-overlay { background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
-        
-        /* Custom Animations */
-        @keyframes scaleIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        .animate-scale { animation: scaleIn 0.3s ease-out forwards; }
-
-        .sold-out { filter: grayscale(1); opacity: 0.7; }
-        
-        .custom-pattern {
-            background-color: #fcfaf7;
-            background-image: radial-gradient(#d4a373 0.5px, #fcfaf7 0.5px);
-            background-size: 10px 10px;
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--soft-bg);
+            cursor: none;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .category-card {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        h1, h2, h3, .brand-font { font-family: 'Playfair Display', serif; letter-spacing: -0.02em; }
+
+        /* Luxury Preloader */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: #fff;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1);
         }
-        .category-card:hover {
-            transform: translateY(-8px);
+        .loader-line {
+            width: 100px;
+            height: 1px;
+            background: #eee;
+            position: relative;
+            overflow: hidden;
         }
-        .category-card:hover img {
-            transform: scale(1.1);
+        .loader-line::after {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; height: 100%; width: 50%;
+            background: var(--brand);
+            animation: loading 1.5s infinite ease-in-out;
+        }
+        @keyframes loading {
+            0% { left: -50%; } 100% { left: 100%; }
+        }
+
+        /* Fluid Custom Cursor */
+        #cursor {
+            width: 8px;
+            height: 8px;
+            background: var(--brand);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 0.1s;
+        }
+        #cursor-follower {
+            width: 40px;
+            height: 40px;
+            border: 0.5px solid rgba(212, 163, 115, 0.4);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Editorial Grain Effect */
+        .grain-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        /* Ultra-Smooth Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Image Hover Parallax Effect */
+        .img-container {
+            overflow: hidden;
+            position: relative;
+        }
+        .img-container img {
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .img-container:hover img {
+            transform: scale(1.08);
+        }
+
+        /* Soft Navigation Underline */
+        .nav-link {
+            position: relative;
+            padding: 4px 0;
+            color: #78716c;
+            transition: color 0.4s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 0; height: 1px;
+            background: var(--brand);
+            transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .nav-link:hover { color: var(--dark); }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Luxury Buttons */
+        .btn-luxury {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .btn-luxury:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -10px rgba(212, 163, 115, 0.3);
+        }
+
+        /* Hide Scrollbar but keep functionality */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e7e5e4; border-radius: 10px; }
+
+        /* Smooth Page Transition Overlay */
+        #page-shutter {
+            position: fixed;
+            inset: 0;
+            background: var(--dark);
+            transform: translateY(100%);
+            z-index: 9999;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        #page-shutter.active { transform: translateY(0); }
+
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            background: #1c1917;
+            padding: 10px 0;
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 40s linear infinite;
+            color: rgba(255,255,255,0.7);
+            font-size: 9px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* Review Screenshot Frame */
+        .screenshot-frame {
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
     </style>
 </head>
-<body class="bg-white text-gray-900">
+<body>
 
-    <!-- Promo Banner -->
-    <div class="offer-gradient text-center py-2 px-4 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-white sticky top-0 z-[60]">
-        Limited Offer: Get 10% Off on your first Custom Order!
+    <!-- Visual Enhancements -->
+    <div id="preloader"><div class="loader-line"></div></div>
+    <div id="cursor"></div>
+    <div id="cursor-follower"></div>
+    <div class="grain-overlay"></div>
+    <div id="page-shutter"></div>
+
+    <!-- Announcement Bar -->
+    <div class="marquee-container sticky top-0 z-[60]">
+        <div class="marquee-content">
+            <span class="px-12">Limited Bespoke Slots Available &nbsp; • &nbsp; Free Worldwide Shipping on orders over Rp 2.000.000 &nbsp; • &nbsp; Luxury Handcrafted Tailoring &nbsp; • &nbsp; </span>
+            <span class="px-12">Limited Bespoke Slots Available &nbsp; • &nbsp; Free Worldwide Shipping on orders over Rp 2.000.000 &nbsp; • &nbsp; Luxury Handcrafted Tailoring &nbsp; • &nbsp; </span>
+        </div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="sticky top-0 bg-white/90 backdrop-blur-md z-50 border-b border-gray-100 px-6 py-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="brand-font text-2xl font-bold cursor-pointer" onclick="switchPage('home')">Ima Asadah</div>
-            <div class="hidden md:flex space-x-8 text-[10px] uppercase tracking-widest font-semibold">
-                <a href="javascript:void(0)" onclick="switchPage('home')" class="hover:text-[#d4a373]">Home</a>
-                <a href="javascript:void(0)" onclick="switchPage('catalog')" class="hover:text-[#d4a373]">Catalog</a>
-                <a href="javascript:void(0)" onclick="switchPage('owner')" class="hover:text-[#d4a373]">Our Founder</a>
-                <a href="javascript:void(0)" onclick="switchPage('order')" class="hover:text-[#d4a373]">How to Order</a>
-                <a href="javascript:void(0)" onclick="switchPage('contact')" class="hover:text-[#d4a373]">Contact</a>
+    <!-- Header -->
+    <nav id="navbar" class="w-full bg-white/60 backdrop-blur-xl z-50 border-b border-stone-100 transition-all duration-700">
+        <div class="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center">
+            <div class="hidden md:flex items-center space-x-10 text-[9px] font-bold uppercase tracking-[0.3em]">
+                <a href="javascript:void(0)" onclick="transitionTo('home')" class="nav-link">Home</a>
+                <a href="javascript:void(0)" onclick="transitionTo('catalog')" class="nav-link">Catalog</a>
             </div>
-            <div class="flex items-center space-x-4">
-                <button onclick="switchPage('catalog')" class="hover:scale-110 transition-transform"><i data-lucide="search" class="w-5 h-5"></i></button>
-                <button class="md:hidden"><i data-lucide="menu" class="w-6 h-6"></i></button>
+            
+            <div class="brand-font text-2xl font-bold tracking-[-0.05em] cursor-pointer" onclick="transitionTo('home')">
+                IMA ASADAH
+            </div>
+
+            <div class="flex items-center space-x-10 text-[9px] font-bold uppercase tracking-[0.3em]">
+                <div class="hidden md:flex space-x-10">
+                    <a href="javascript:void(0)" onclick="transitionTo('owner')" class="nav-link">Atelier</a>
+                    <a href="javascript:void(0)" onclick="transitionTo('contact')" class="nav-link">Contact</a>
+                </div>
+                <button onclick="transitionTo('catalog')" class="hover:text-[#d4a373] transition-colors"><i data-lucide="search" class="w-4 h-4"></i></button>
             </div>
         </div>
     </nav>
 
     <!-- Home Page -->
-    <main id="home-page" class="page-transition">
+    <main id="home-page" class="opacity-100 transition-opacity duration-1000">
         <!-- Hero -->
-        <section class="h-[70vh] relative flex items-center justify-center text-center text-white">
-            <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&w=2071" class="absolute inset-0 w-full h-full object-cover brightness-75" alt="Hero">
-            <div class="relative z-10 px-6">
-                <h1 class="text-5xl md:text-7xl font-bold mb-6">Effortless Style</h1>
-                <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto font-light">Eksplorasi koleksi pakaian modern dengan sentuhan personalitas unik Anda.</p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button onclick="switchPage('catalog')" class="bg-white text-black px-10 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-[#d4a373] hover:text-white transition-all">Explore Collection</button>
-                    <button onclick="switchPage('owner')" class="bg-transparent border border-white text-white px-10 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-white hover:text-black transition-all">Meet the Designer</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- NEW SECTION: Shop By Category -->
-        <section class="py-20 px-6 max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <span class="text-[#d4a373] text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Discover Our Style</span>
-                <h2 class="text-4xl md:text-5xl font-bold brand-font">Shop By Category</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Category 1: Dresses -->
-                <div onclick="filterAndNavigate('Dresses')" class="category-card relative group cursor-pointer overflow-hidden rounded-[2rem] aspect-[4/5] md:aspect-square">
-                    <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700" alt="Dresses">
-                    <div class="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors"></div>
-                    <div class="absolute inset-0 p-8 flex flex-col justify-end">
-                        <h3 class="text-white text-3xl font-bold mb-2">Dresses</h3>
-                        <p class="text-white/80 text-sm uppercase tracking-widest font-semibold flex items-center gap-2">
-                            Explore Collection <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        </p>
-                    </div>
-                </div>
-                <!-- Category 2: Tops -->
-                <div onclick="filterAndNavigate('Tops')" class="category-card relative group cursor-pointer overflow-hidden rounded-[2rem] aspect-[4/5] md:aspect-square">
-                    <img src="https://images.unsplash.com/photo-1551163943-3f6a855d1153?auto=format&fit=crop&q=80&w=800" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700" alt="Tops">
-                    <div class="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors"></div>
-                    <div class="absolute inset-0 p-8 flex flex-col justify-end">
-                        <h3 class="text-white text-3xl font-bold mb-2">Tops</h3>
-                        <p class="text-white/80 text-sm uppercase tracking-widest font-semibold flex items-center gap-2">
-                            Explore Collection <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        </p>
-                    </div>
-                </div>
-                <!-- Category 3: Outerwear -->
-                <div onclick="filterAndNavigate('Outerwear')" class="category-card relative group cursor-pointer overflow-hidden rounded-[2rem] aspect-[4/5] md:aspect-square">
-                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=800" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700" alt="Outerwear">
-                    <div class="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors"></div>
-                    <div class="absolute inset-0 p-8 flex flex-col justify-end">
-                        <h3 class="text-white text-3xl font-bold mb-2">Outerwear</h3>
-                        <p class="text-white/80 text-sm uppercase tracking-widest font-semibold flex items-center gap-2">
-                            Explore Collection <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        </p>
+        <section class="relative h-[92vh] flex items-center justify-center overflow-hidden bg-stone-200">
+            <img id="hero-img" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070" class="absolute inset-0 w-full h-full object-cover brightness-[0.85] scale-110" alt="Hero">
+            <div class="relative z-10 text-center text-white px-6">
+                <div class="reveal active">
+                    <span class="text-[10px] uppercase tracking-[0.8em] font-medium mb-8 block opacity-80">Since 2015 — Jakarta</span>
+                    <h1 class="text-7xl md:text-[10rem] font-bold mb-10 leading-[0.85] italic tracking-tighter">Pure<br>Elegance</h1>
+                    <div class="flex flex-col sm:flex-row gap-8 justify-center items-center mt-12">
+                        <button onclick="transitionTo('catalog')" class="btn-luxury bg-white text-stone-900 px-12 py-5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em]">View Collection</button>
+                        <button onclick="transitionTo('owner')" class="text-white border-b border-white/30 pb-1 text-[10px] font-bold uppercase tracking-[0.2em] hover:border-white transition-all">The Atelier Story</button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Custom Tailoring -->
-        <section class="py-24 custom-pattern overflow-hidden">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="grid md:grid-cols-2 gap-16 items-center">
-                    <div class="order-2 md:order-1 grid grid-cols-2 gap-4">
-                        <div class="space-y-4 pt-12">
-                            <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&q=80&w=400" class="rounded-2xl shadow-lg w-full aspect-[4/5] object-cover" alt="Fabric selection">
-                            <img src="https://images.unsplash.com/photo-1556905055-8f358a7a4bb4?auto=format&fit=crop&q=80&w=400" class="rounded-2xl shadow-lg w-full aspect-square object-cover" alt="Measurement process">
-                        </div>
-                        <div class="space-y-4">
-                            <img src="https://images.unsplash.com/photo-1520006403909-838d6b92c22e?auto=format&fit=crop&q=80&w=400" class="rounded-2xl shadow-lg w-full aspect-square object-cover" alt="Sewing machine">
-                            <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=400" class="rounded-2xl shadow-lg w-full aspect-[4/5] object-cover" alt="Finished custom dress">
-                        </div>
-                    </div>
-                    <div class="order-1 md:order-2 space-y-8">
-                        <div>
-                            <span class="text-[#d4a373] text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Personalized Service</span>
-                            <h2 class="text-4xl md:text-5xl font-bold brand-font mb-6 leading-tight">Custom Tailoring Experience</h2>
-                            <p class="text-gray-600 leading-relaxed text-lg">Wujudkan pakaian impian yang dirancang khusus mengikuti bentuk tubuh dan preferensi gaya Anda. Kami membantu Anda memilih material terbaik hingga detail jahitan terkecil.</p>
-                        </div>
-                        <ul class="space-y-4">
-                            <li class="flex items-center gap-4 text-gray-700">
-                                <div class="bg-white p-2 rounded-full shadow-sm"><i data-lucide="check" class="w-4 h-4 text-[#d4a373]"></i></div>
-                                <span>Konsultasi Desain Gratis</span>
-                            </li>
-                            <li class="flex items-center gap-4 text-gray-700">
-                                <div class="bg-white p-2 rounded-full shadow-sm"><i data-lucide="check" class="w-4 h-4 text-[#d4a373]"></i></div>
-                                <span>Pilihan Material Premium</span>
-                            </li>
-                            <li class="flex items-center gap-4 text-gray-700">
-                                <div class="bg-white p-2 rounded-full shadow-sm"><i data-lucide="check" class="w-4 h-4 text-[#d4a373]"></i></div>
-                                <span>Fitting Tak Terbatas hingga Sempurna</span>
-                            </li>
-                        </ul>
-                        <div class="pt-4">
-                            <button onclick="orderWhatsApp()" class="bg-stone-900 text-white px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#d4a373] transition-all flex items-center gap-3">
-                                Start Custom Project <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+        <!-- Visual Categories -->
+        <section class="py-32 px-8 max-w-7xl mx-auto">
+            <div id="category-grid-container" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Dynamically filled -->
             </div>
         </section>
 
-        <!-- Special Offers Category -->
-        <section class="py-16 bg-stone-900 text-white overflow-hidden">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
-                    <div>
-                        <span class="text-[#d4a373] text-[10px] font-bold uppercase tracking-[0.3em] mb-2 block">Flash Sale</span>
-                        <h2 class="text-4xl font-bold brand-font">Special Offers</h2>
-                    </div>
-                    <p class="text-gray-400 text-sm max-w-xs md:text-right">Dapatkan potongan harga eksklusif untuk koleksi terpilih hanya di minggu ini.</p>
-                </div>
-                <div id="special-offers-grid" class="grid grid-cols-2 md:grid-cols-3 gap-8">
-                    <!-- JS will inject offer cards here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Dynamic Featured Products -->
-        <section class="py-20 px-6 max-w-7xl mx-auto">
-            <div class="flex justify-between items-end mb-12">
+        <!-- Product Highlight -->
+        <section class="py-40 px-8 max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-24 reveal">
                 <div>
-                    <h2 class="text-3xl font-bold mb-2">Editor's Picks</h2>
-                    <p class="text-gray-500">Produk pilihan terbaik untuk minggu ini.</p>
+                    <span class="text-[#d4a373] text-[9px] font-bold uppercase tracking-[0.5em] mb-4 block">New Arrivals</span>
+                    <h2 class="text-5xl md:text-7xl brand-font italic">Seasonal Picks</h2>
                 </div>
-                <button onclick="switchPage('catalog')" class="text-sm font-bold border-b-2 border-black pb-1">View All</button>
+                <p class="max-w-xs text-stone-400 text-xs leading-loose font-light italic mt-6 md:mt-0">Curated pieces that define modern sophistication through timeless silhouettes.</p>
             </div>
-            <div id="featured-grid" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
+            <div id="featured-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-12"></div>
         </section>
 
-        <!-- Dynamic Reviews -->
-        <section class="py-20 bg-stone-50 px-6">
-            <div class="max-w-7xl mx-auto">
-                <h2 class="text-center text-3xl font-bold mb-16">Customer Stories</h2>
-                <div id="reviews-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
+        <!-- Testimonials (Atelier Voices) -->
+        <section class="py-40 bg-stone-100 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-8">
+                <div class="text-center mb-32 reveal">
+                    <span class="text-[#d4a373] text-[9px] font-bold uppercase tracking-[0.5em] mb-4 block">Kind Words</span>
+                    <h2 class="text-5xl brand-font italic">Atelier Voices</h2>
+                </div>
+                <div id="testimonial-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-16">
+                    <!-- Dynamically filled -->
+                </div>
             </div>
         </section>
+
+        <!-- Design Philosophy / Owner Section Short -->
+        <section class="py-32 bg-white relative">
+            <div class="max-w-7xl mx-auto px-8 grid md:grid-cols-2 gap-24 items-center">
+                <div class="reveal img-container rounded-[2rem]">
+                    <img id="owner-feature-img" src="" class="w-full aspect-[4/5] object-cover" alt="Detail">
+                </div>
+                <div class="reveal space-y-12">
+                    <div>
+                        <span class="text-[#d4a373] text-[9px] font-bold uppercase tracking-[0.5em] mb-4 block">Our Ethos</span>
+                        <h2 class="text-5xl brand-font italic mb-10" id="owner-short-title">Meticulous Detail,<br>Personalized Fit</h2>
+                        <p class="text-stone-500 text-lg font-light leading-relaxed" id="owner-short-bio">Kami percaya bahwa setiap jahitan membawa cerita.</p>
+                    </div>
+                    <div class="space-y-8">
+                        <div class="flex gap-6 group">
+                            <div class="text-[#d4a373] pt-1"><i data-lucide="award" class="w-5 h-5"></i></div>
+                            <div>
+                                <h4 class="text-[10px] font-bold uppercase tracking-widest mb-2">Premium Sourcing</h4>
+                                <p class="text-xs text-stone-400 font-light">Silk, Linen, and Lace sourced from the finest mills.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6 group">
+                            <div class="text-[#d4a373] pt-1"><i data-lucide="heart" class="w-5 h-5"></i></div>
+                            <div>
+                                <h4 class="text-[10px] font-bold uppercase tracking-widest mb-2">Soulful Tailoring</h4>
+                                <p class="text-xs text-stone-400 font-light">Designed to embrace every curve with grace.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="transitionTo('owner')" class="btn-luxury inline-flex items-center gap-6 bg-stone-900 text-white px-12 py-5 rounded-full text-[10px] font-bold uppercase tracking-[0.3em]">
+                        Read Our Story <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visual Footer -->
+        <footer class="bg-[#1c1917] text-white pt-40 pb-20 px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-40 reveal">
+                    <h2 class="text-4xl md:text-8xl brand-font italic mb-12 opacity-90">Ima Asadah</h2>
+                    <div id="socials-container" class="flex justify-center space-x-12">
+                        <!-- Dynamically filled -->
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-20 border-t border-white/5 pt-20">
+                    <div class="text-[10px] text-stone-500 leading-loose tracking-widest uppercase">
+                        &copy; 2024 Atelier Ima Asadah.<br>Handcrafted in Indonesia.
+                    </div>
+                    <div class="flex flex-col space-y-4 text-[10px] uppercase tracking-widest font-bold">
+                        <a href="javascript:void(0)" onclick="transitionTo('catalog')" class="hover:text-[#d4a373]">Lookbook</a>
+                        <a href="javascript:void(0)" onclick="transitionTo('contact')" class="hover:text-[#d4a373]">Book Appointment</a>
+                    </div>
+                    <div class="text-[10px] text-stone-500 leading-loose tracking-widest uppercase md:text-right">
+                        Jl. Fashionista No. 123,<br>Jakarta Selatan, ID.
+                    </div>
+                </div>
+            </div>
+        </footer>
     </main>
 
     <!-- Owner Page -->
-    <main id="owner-page" class="page-transition hidden-page py-20 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-16 items-center mb-32">
-                <div class="relative">
-                    <div class="absolute -top-6 -left-6 w-full h-full border-[12px] border-stone-100 rounded-[3rem] -z-10"></div>
-                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800" class="w-full rounded-[2.5rem] shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000" alt="Ima Asadah">
-                </div>
-                <div class="space-y-8">
-                    <div class="space-y-2">
-                        <span class="text-[#d4a373] text-sm font-bold uppercase tracking-[0.3em]">The Visionary</span>
-                        <h2 class="text-6xl font-bold brand-font">Ima Asadah</h2>
-                    </div>
-                    <p class="text-xl text-gray-600 italic font-light leading-relaxed">
-                        "Fashion bukan hanya tentang apa yang Anda pakai, tapi tentang bagaimana Anda bercerita kepada dunia tanpa mengucapkan sepatah kata pun."
-                    </p>
-                    <div class="space-y-6 text-gray-700 leading-relaxed">
-                        <p>Berawal dari sebuah studio kecil pada tahun 2015, Ima Asadah membangun label ini dengan satu misi sederhana: memberikan setiap individu kesempatan untuk memakai pakaian yang benar-benar pas dengan jiwa mereka.</p>
-                        <p>Sebagai seorang perfeksionis, Ima mengawasi setiap tahap produksi—mulai dari pemilihan serat benang hingga sentuhan akhir pada kancing. Keahliannya dalam teknik kustom tailoring telah menjadikannya pilihan utama bagi mereka yang mencari keanggunan yang presisi.</p>
-                    </div>
-                    <div class="flex gap-8 pt-6">
-                        <div>
-                            <p class="text-3xl font-bold">10+</p>
-                            <p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Years Experience</p>
-                        </div>
-                        <div class="w-px h-12 bg-gray-200"></div>
-                        <div>
-                            <p class="text-3xl font-bold">2.5k</p>
-                            <p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Custom Designs</p>
-                        </div>
-                    </div>
-                </div>
+    <main id="owner-page" class="hidden opacity-0 py-40 px-8 bg-stone-50">
+        <div class="max-w-4xl mx-auto">
+            <div class="reveal mb-24 text-center">
+                <span class="text-[#d4a373] text-[9px] font-bold uppercase tracking-[0.5em] mb-4 block">The Founder</span>
+                <h2 id="full-owner-name" class="text-6xl md:text-8xl brand-font italic mb-12">Ima Asadah</h2>
             </div>
-
-            <!-- Philosophy Section -->
-            <div class="bg-stone-900 text-white rounded-[3rem] p-12 md:p-20 text-center space-y-8">
-                <h3 class="text-3xl md:text-4xl brand-font">Filosofi Desain Kami</h3>
-                <div class="grid md:grid-cols-3 gap-12">
-                    <div class="space-y-4">
-                        <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto"><i data-lucide="leaf" class="w-6 h-6 text-[#d4a373]"></i></div>
-                        <h4 class="font-bold">Kenyamanan Alami</h4>
-                        <p class="text-sm text-gray-400">Hanya menggunakan serat alami seperti linen dan sutra yang bernapas bersama kulit Anda.</p>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto"><i data-lucide="scissors" class="w-6 h-6 text-[#d4a373]"></i></div>
-                        <h4 class="font-bold">Presisi Tanpa Batas</h4>
-                        <p class="text-sm text-gray-400">Setiap jahitan dihitung untuk memastikan daya tahan dan siluet yang sempurna.</p>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto"><i data-lucide="heart" class="w-6 h-6 text-[#d4a373]"></i></div>
-                        <h4 class="font-bold">Dibuat dengan Cinta</h4>
-                        <p class="text-sm text-gray-400">Setiap pesanan adalah karya seni yang kami hargai dengan perhatian penuh.</p>
+            <div class="grid md:grid-cols-2 gap-16 items-start mb-32">
+                <div class="reveal img-container rounded-[3rem]">
+                    <img id="full-owner-img" src="" class="w-full object-cover aspect-[3/4]">
+                </div>
+                <div class="reveal space-y-8 py-12">
+                    <p id="full-owner-bio" class="text-stone-600 text-lg leading-loose font-light italic">
+                        The journey began with a single needle and a vision for timeless beauty.
+                    </p>
+                    <div class="pt-8 border-t border-stone-200">
+                        <h4 class="text-[10px] font-bold uppercase tracking-widest mb-4">Core Philosophy</h4>
+                        <p class="text-sm text-stone-500 leading-relaxed">Setiap wanita berhak merasa istimewa. Kami tidak hanya membuat pakaian, kami membangun kepercayaan diri melalui siluet yang presisi.</p>
                     </div>
                 </div>
             </div>
@@ -280,349 +349,506 @@
     </main>
 
     <!-- Catalog Page -->
-    <main id="catalog-page" class="page-transition hidden-page py-20 px-6">
+    <main id="catalog-page" class="hidden opacity-0 py-40 px-8">
         <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
-                <h2 class="text-4xl font-bold">Shop Collection</h2>
-                <div class="flex gap-4 w-full md:w-auto">
-                    <select id="cat-filter" onchange="renderCatalog()" class="flex-1 md:flex-none border border-gray-200 rounded-full px-6 py-2 text-sm outline-none">
-                        <option value="all">All Categories</option>
-                        <option value="Dresses">Dresses</option>
-                        <option value="Outerwear">Outerwear</option>
-                        <option value="Tops">Tops</option>
+            <div class="flex flex-col md:flex-row justify-between items-center mb-32 border-b border-stone-100 pb-12">
+                <h2 class="text-6xl brand-font italic">Archive</h2>
+                <div class="flex gap-12 mt-12 md:mt-0">
+                    <select id="cat-filter" onchange="renderCatalog()" class="bg-transparent border-none text-[10px] font-bold uppercase tracking-[0.3em] outline-none cursor-pointer hover:text-[#d4a373] transition-colors">
+                        <option value="all">Everything</option>
                     </select>
-                    <select id="sort-order" onchange="renderCatalog()" class="flex-1 md:flex-none border border-gray-200 rounded-full px-6 py-2 text-sm outline-none">
-                        <option value="new">Newest</option>
-                        <option value="low">Price: Low-High</option>
-                        <option value="high">Price: High-Low</option>
+                    <select id="sort-order" onchange="renderCatalog()" class="bg-transparent border-none text-[10px] font-bold uppercase tracking-[0.3em] outline-none cursor-pointer hover:text-[#d4a373] transition-colors">
+                        <option value="new">Latest</option>
+                        <option value="low">Value: Low</option>
+                        <option value="high">Value: High</option>
                     </select>
                 </div>
             </div>
-            <div id="catalog-grid" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
+            <div id="catalog-grid" class="grid grid-cols-2 md:grid-cols-4 gap-12"></div>
         </div>
     </main>
 
-    <!-- How to Order Page -->
-    <main id="order-page" class="page-transition hidden-page py-20 px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl font-bold mb-12">How to Order</h2>
-            <div class="grid md:grid-cols-3 gap-12">
-                <div class="space-y-4">
-                    <div class="w-16 h-16 bg-[#d4a373] text-white rounded-full flex items-center justify-center mx-auto text-xl font-bold shadow-lg">1</div>
-                    <h3 class="font-bold">Pilih Produk</h3>
-                    <p class="text-gray-500 text-sm">Cari produk favorit Anda di katalog atau konsultasikan desain kustom.</p>
-                </div>
-                <div class="space-y-4">
-                    <div class="w-16 h-16 bg-[#d4a373] text-white rounded-full flex items-center justify-center mx-auto text-xl font-bold shadow-lg">2</div>
-                    <h3 class="font-bold">Hubungi Admin</h3>
-                    <p class="text-gray-500 text-sm">Klik tombol WhatsApp untuk konfirmasi stok dan detail ukuran.</p>
-                </div>
-                <div class="space-y-4">
-                    <div class="w-16 h-16 bg-[#d4a373] text-white rounded-full flex items-center justify-center mx-auto text-xl font-bold shadow-lg">3</div>
-                    <h3 class="font-bold">Pembayaran</h3>
-                    <p class="text-gray-500 text-sm">Lakukan pembayaran dan pesanan Anda akan segera diproses atau dikirim.</p>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Contact & Map Page -->
-    <main id="contact-page" class="page-transition hidden-page py-20 px-6 bg-white">
+    <!-- Contact Page -->
+    <main id="contact-page" class="hidden opacity-0 py-40 px-8 bg-stone-50">
         <div class="max-w-7xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="space-y-8">
-                    <h2 class="text-5xl font-bold brand-font">Get in Touch</h2>
-                    <p class="text-gray-500">Silakan kunjungi butik kami atau hubungi kami melalui media sosial.</p>
-                    
-                    <div class="space-y-6">
-                        <div class="flex items-start gap-4">
-                            <div class="p-3 bg-stone-100 rounded-full"><i data-lucide="map-pin" class="w-5 h-5 text-[#d4a373]"></i></div>
-                            <div>
-                                <p class="font-bold">Atelier Address</p>
-                                <p class="text-sm text-gray-500">Jl. Fashionista No. 123, Jakarta Selatan, Indonesia</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <div class="p-3 bg-stone-100 rounded-full"><i data-lucide="mail" class="w-5 h-5 text-[#d4a373]"></i></div>
-                            <div>
-                                <p class="font-bold">Email Us</p>
-                                <p class="text-sm text-gray-500">hello@imaasadah.com</p>
-                            </div>
+            <div class="reveal mb-24">
+                <span class="text-[#d4a373] text-[9px] font-bold uppercase tracking-[0.5em] mb-4 block">Get in Touch</span>
+                <h2 class="text-6xl md:text-8xl brand-font italic mb-4">The Atelier</h2>
+                <p class="text-stone-400 font-light italic">We invite you to experience our craft firsthand.</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-12 gap-16 items-start">
+                <!-- Info Column -->
+                <div class="lg:col-span-4 space-y-16 reveal">
+                    <div>
+                        <h4 class="text-[10px] font-bold uppercase tracking-widest text-[#d4a373] mb-6">Location</h4>
+                        <p class="text-stone-600 text-lg leading-relaxed font-light">
+                            Jl. Fashionista No. 123,<br>
+                            Kebayoran Baru, Jakarta Selatan<br>
+                            Indonesia, 12160
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-[10px] font-bold uppercase tracking-widest text-[#d4a373] mb-6">Hours</h4>
+                        <ul class="text-stone-600 space-y-3 font-light">
+                            <li class="flex justify-between"><span>Mon — Fri</span> <span class="font-medium">10:00 - 18:00</span></li>
+                            <li class="flex justify-between"><span>Saturday</span> <span class="font-medium">11:00 - 16:00</span></li>
+                            <li class="flex justify-between"><span>Sunday</span> <span class="text-stone-300">By Appointment</span></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-[10px] font-bold uppercase tracking-widest text-[#d4a373] mb-6">Direct Inquiries</h4>
+                        <div class="space-y-4">
+                            <a href="mailto:atelier@imaasadah.com" class="block text-stone-800 hover:text-[#d4a373] transition-colors">atelier@imaasadah.com</a>
+                            <a href="javascript:void(0)" onclick="orderWhatsApp()" class="block text-stone-800 hover:text-[#d4a373] transition-colors">+62 857 3233 5094</a>
                         </div>
                     </div>
 
-                    <!-- Social Media Links -->
-                    <div class="pt-4">
-                        <p class="text-[10px] uppercase tracking-widest font-bold text-gray-400 mb-4">Follow Our Journey</p>
-                        <div class="flex gap-4">
-                            <a href="#" class="w-10 h-10 bg-stone-900 text-white rounded-full flex items-center justify-center hover:bg-[#d4a373] transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                            <a href="#" class="w-10 h-10 bg-stone-900 text-white rounded-full flex items-center justify-center hover:bg-[#d4a373] transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
-                            <a href="#" class="w-10 h-10 bg-stone-900 text-white rounded-full flex items-center justify-center hover:bg-[#d4a373] transition-colors"><i data-lucide="music-2" class="w-5 h-5"></i></a>
-                        </div>
-                    </div>
+                    <button onclick="orderWhatsApp()" class="btn-luxury w-full bg-stone-900 text-white py-6 rounded-full text-[10px] font-bold uppercase tracking-[0.3em]">
+                        Book Private Consultation
+                    </button>
                 </div>
-                <div class="h-[400px] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126916.03964951232!2d106.7892128!3d-6.2444697!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f14d30079f01%3A0x2ef3bb63d5964098!2sJakarta%20Selatan%2C%20Kota%20Jakarta%20Selatan%2C%20Daerah%20Khusus%20Ibukota%20Jakarta!5e0!3m2!1sid!2sid!4v1704510000000!5m2!1sid!2sid" 
-                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
+
+                <!-- Map Column -->
+                <div class="lg:col-span-8 reveal">
+                    <div class="w-full aspect-[16/9] lg:aspect-auto lg:h-[600px] bg-stone-200 rounded-[3rem] overflow-hidden shadow-2xl relative">
+                        <iframe 
+                            class="absolute inset-0 w-full h-full grayscale opacity-80 hover:opacity-100 transition-opacity duration-700"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126906.84223405788!2d106.71967704386708!3d-6.284897262279184!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e945e3fa73%3A0x196132034058f435!2sSouth%20Jakarta%2C%20South%20Jakarta%20City%2C%20Jakarta!5e0!3m2!1sen!2sid!4v1715638100234!5m2!1sen!2sid" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Product View Popup -->
-    <div id="product-modal" class="modal-overlay fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl relative flex flex-col md:flex-row animate-scale">
-            <button onclick="closeModal()" class="absolute top-4 right-4 z-10 bg-white/80 p-2 rounded-full hover:bg-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-            <div class="w-full md:w-1/2 aspect-square relative">
-                <img id="modal-img" src="" class="w-full h-full object-cover">
-                <div id="modal-sold-overlay" class="absolute inset-0 bg-white/60 backdrop-blur-[2px] hidden flex items-center justify-center">
-                    <span class="bg-red-600 text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest transform -rotate-12 shadow-xl border-4 border-white">Sold Out</span>
-                </div>
-            </div>
-            <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-                <div class="flex justify-between items-start mb-4">
-                    <div id="modal-tag" class="hidden">
-                        <span class="bg-[#d4a373] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">Limited Offer</span>
-                    </div>
-                    <span id="modal-stock-badge" class="text-[10px] font-bold px-3 py-1 rounded-full uppercase border">Stock: 0</span>
-                </div>
-                <h3 id="modal-title" class="text-3xl font-bold mb-2">Product Title</h3>
-                <p id="modal-price" class="text-xl text-[#d4a373] font-semibold mb-6">Rp 0</p>
-                <div class="text-gray-600 text-sm leading-relaxed mb-8 space-y-4">
-                    <p id="modal-desc">Detailed product description goes here...</p>
-                </div>
-                <button id="modal-order-btn" onclick="orderWhatsApp()" class="w-full bg-black text-white py-4 rounded-full font-bold hover:bg-[#d4a373] transition-colors flex items-center justify-center gap-2 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed">
-                    <i data-lucide="message-circle" class="w-5 h-5"></i> <span id="btn-text">Order via WhatsApp</span>
-                </button>
-                <p id="modal-stock-warning" class="text-center text-xs text-red-500 font-bold mt-4 hidden">Maaf, produk ini sedang tidak tersedia.</p>
+    <!-- Proof Modal -->
+    <div id="proof-modal" class="fixed inset-0 z-[110] hidden bg-stone-900/40 backdrop-blur-md flex items-center justify-center p-8">
+        <div class="relative max-w-lg w-full scale-90 opacity-0 transition-all duration-700" id="proof-content">
+            <button onclick="closeProof()" class="absolute -top-12 right-0 p-2 text-white hover:rotate-90 transition-transform"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <div class="bg-white p-4 rounded-3xl screenshot-frame">
+                <img id="proof-img" src="" class="w-full h-auto rounded-2xl shadow-inner">
             </div>
         </div>
     </div>
 
-    <!-- WhatsApp Float -->
-    <a href="https://wa.me/6285732335094" target="_blank" class="fixed bottom-8 right-8 bg-[#25d366] text-white p-4 rounded-full shadow-xl hover:scale-110 transition-transform z-50">
-        <i data-lucide="message-circle" class="w-6 h-6"></i>
-    </a>
+    <!-- Modal -->
+    <div id="product-modal" class="fixed inset-0 z-[100] hidden bg-stone-900/60 backdrop-blur-xl flex items-center justify-center p-8">
+        <div class="bg-white w-full max-w-5xl rounded-[3rem] overflow-hidden shadow-2xl relative flex flex-col md:flex-row scale-90 opacity-0 transition-all duration-700" id="modal-content">
+            <button onclick="closeModal()" class="absolute top-10 right-10 z-10 p-2 hover:rotate-90 transition-transform duration-500"><i data-lucide="x" class="w-6 h-6 text-stone-400"></i></button>
+            <div class="w-full md:w-1/2 aspect-[4/5] img-container">
+                <img id="modal-img" src="" class="w-full h-full object-cover">
+            </div>
+            <div class="w-full md:w-1/2 p-16 flex flex-col justify-center">
+                <div class="flex justify-between items-start mb-6">
+                    <span id="modal-cat" class="text-[9px] text-[#d4a373] uppercase tracking-[0.5em] font-bold block">Category</span>
+                    <span id="modal-offer-tag" class="hidden text-[8px] font-bold uppercase tracking-widest text-white bg-[#9f1239] px-4 py-1.5 rounded-full">Limited Offer</span>
+                </div>
+                <h3 id="modal-title" class="text-5xl font-bold mb-6 brand-font italic">Product Name</h3>
+                <div class="flex items-center gap-6 mb-10">
+                    <p id="modal-price" class="text-2xl font-light text-stone-400">Rp 0</p>
+                    <p id="modal-old-price" class="hidden text-sm text-stone-300 line-through">Rp 0</p>
+                </div>
+                <p id="modal-desc" class="text-stone-500 text-sm leading-relaxed mb-12 font-light">Detailed product description...</p>
+                <div id="modal-stock-info" class="mb-10 text-[9px] font-bold uppercase tracking-[0.2em] text-stone-400">Availability: High</div>
+                <button id="modal-btn" onclick="orderWhatsApp()" class="btn-luxury w-full bg-stone-900 text-white py-6 rounded-full text-[10px] font-bold uppercase tracking-[0.3em]">Enquire via WhatsApp</button>
+            </div>
+        </div>
+    </div>
 
     <script>
-        const products = [
-            { id: 1, name: "Linen Gathered Dress", price: 450000, oldPrice: 550000, category: "Dresses", img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600", offer: true, stock: 12, desc: "Dress premium dari bahan linen pilihan yang sejuk dan jatuh. Cocok untuk acara outdoor maupun casual gathering." },
-            { id: 2, name: "Silk Wrap Blouse", price: 320000, oldPrice: null, category: "Tops", img: "https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=600", offer: false, stock: 0, desc: "Blouse sutra dengan model wrap yang elegan, memberikan kesan mewah dan feminin." },
-            { id: 3, name: "Autumn Trench Coat", price: 650000, oldPrice: 780000, category: "Outerwear", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600", offer: true, stock: 5, desc: "Outerwear ikonik untuk tampilan profesional. Tahan angin dan stylish di segala suasana." },
-            { id: 4, name: "Minimalist Camisole", price: 185000, oldPrice: null, category: "Tops", img: "https://images.unsplash.com/photo-1604176354204-926873ff3da9?w=600", offer: false, stock: 24, desc: "Basic camisole yang wajib dimiliki. Nyaman digunakan sebagai dalaman atau atasan casual." },
-            { id: 5, name: "Pleated Midi Skirt", price: 295000, oldPrice: null, category: "Bottoms", img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600", offer: false, stock: 0, desc: "Rok plisket dengan potongan midi yang timeless. Mudah dipadupadankan." },
-            { id: 6, name: "Satin Evening Dress", price: 680000, oldPrice: 850000, category: "Dresses", img: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=600", offer: true, stock: 2, desc: "Koleksi pesta eksklusif dengan detail satin mengkilap yang memikat perhatian." }
-        ];
-
-        const reviews = [
-            { 
-                name: "Saraswati", 
-                rating: 5, 
-                text: "Jahitannya sangat rapi, benar-benar butik kualitasnya. Admin juga sangat membantu saat konsultasi ukuran.", 
-                timestamp: new Date(Date.now() - 172800000).toISOString(),
-                proofImg: "https://images.unsplash.com/photo-1574634534894-89d7576c8259?auto=format&fit=crop&q=80&w=400"
+        // --- DYNAMIC DATA SOURCE ---
+        const siteData = {
+            owner: {
+                name: "Ima Asadah",
+                shortBio: "Founder & Creative Director. Mendedikasikan diri untuk melestarikan keahlian menjahit tangan melalui siluet modern yang berkelas.",
+                fullBio: "Lahir dari kecintaan pada kain berkualitas tinggi dan desain minimalis, Ima Asadah membangun atelier ini dengan prinsip 'Simplicity is the ultimate sophistication'. Perjalanan yang dimulai dari butik kecil di Jakarta kini berkembang menjadi rumah mode bespoke yang mengutamakan kenyamanan dan elegansi setiap kliennya.",
+                img: "https://raw.githubusercontent.com/rokeykhan542/ImaAsadah/main/photos/Gemini_Generated_Image_hv40a7hv40a7hv40.png",
+                featureImg: "https://images.unsplash.com/photo-1537832816519-689ad163238b?q=80&w=2070"
             },
-            { 
-                name: "Amanda L.", 
-                rating: 5, 
-                text: "Outer-nya cantik banget! Bahannya jatuh dan nggak gampang kusut. Pas banget buat kerja.", 
-                timestamp: new Date(Date.now() - 604800000).toISOString(),
-                proofImg: null 
-            },
-            { 
-                name: "Fitri Ramadhani", 
-                rating: 4, 
-                text: "Custom dress-nya jadi tepat waktu. Warnanya persis seperti di foto catalog.", 
-                timestamp: new Date(Date.now() - 1209600000).toISOString(),
-                proofImg: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400"
-            }
-        ];
+            categories: [
+                { name: "Dresses", type: "Curated", img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800" },
+                { name: "Tops", type: "Essential", img: "https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=800", shifted: true },
+                { name: "Outerwear", type: "Timeless", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800" }
+            ],
+            products: [
+                { id: 1, name: "Linen Gathered Dress", price: 450000, oldPrice: 520000, category: "Dresses", img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800", stock: 12, desc: "A breathable, fluid silhouette handcrafted from sustainably sourced linen. Perfect for golden hour gatherings." },
+                { id: 2, name: "Silk Wrap Blouse", price: 320000, category: "Tops", img: "https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=800", stock: 0, desc: "Liquid silk that moves with you. This wrap design features hand-finished seams and a timeless collar." },
+                { id: 3, name: "Autumn Trench Coat", price: 650000, category: "Outerwear", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800", stock: 5, desc: "The definitive outerwear piece. Structured yet soft, designed to be layered for a sophisticated transitional look." },
+                { id: 4, name: "Minimalist Camisole", price: 185000, category: "Tops", img: "https://images.unsplash.com/photo-1604176354204-926873ff3da9?w=800", stock: 24, desc: "A masterclass in minimalism. Fine straps and a subtle sheen make this the ultimate foundation piece." },
+                { id: 5, name: "Satin Evening Dress", price: 680000, oldPrice: 850000, category: "Dresses", img: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800", stock: 2, desc: "Dramatically draped satin for your most memorable evenings. Features a hidden side zip and floor-length hem." }
+            ],
+            reviews: [
+                { name: "Sarah K.", role: "Verified Collector", text: "Bahannya benar-benar premium. Jahitannya sangat rapi, jauh di atas ekspektasi saya untuk butik lokal. Pasti akan pesan lagi!", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100", proof: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800" },
+                { name: "Maya R.", role: "Atelier Client", text: "Linen dress-nya sangat adem. Fitting-nya pas sekali di badan, seperti dibuat khusus untuk saya. Thank you Kak Ima!", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100", proof: null },
+                { name: "Indah P.", role: "New Member", text: "Proses order sangat smooth. Admin sangat membantu konsultasi size. Bajunya mewah sekali dipakainya.", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100", proof: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800" }
+            ],
+            socials: [
+                { name: "Instagram", link: "#" },
+                { name: "Facebook", link: "#" },
+                { name: "WhatsApp", link: "#" }
+            ]
+        };
 
+        // --- CORE LOGIC ---
+        const cursor = document.getElementById('cursor');
+        const follower = document.getElementById('cursor-follower');
+        let cursorActive = false;
         let activeProduct = null;
 
-        function formatRelativeTime(dateString) {
-            const date = new Date(dateString);
-            const now = new Date();
-            const diffInSeconds = Math.floor((now - date) / 1000);
-            const diffInDays = Math.floor(diffInSeconds / 86400);
-            if (diffInDays === 0) return "Today";
-            if (diffInDays === 1) return "Yesterday";
-            if (diffInDays < 7) return `${diffInDays} days ago`;
-            if (diffInDays < 30) return `${Math.floor(diffInDays / 7)} weeks ago`;
-            return date.toLocaleDateString();
-        }
+        document.addEventListener('mousemove', e => {
+            if(!cursorActive && cursor && follower) { 
+                cursor.style.opacity = 1; 
+                follower.style.opacity = 1; 
+                cursorActive = true; 
+            }
+            if (cursor && follower) {
+                cursor.style.transform = `translate3d(${e.clientX - 4}px, ${e.clientY - 4}px, 0)`;
+                follower.style.transform = `translate3d(${e.clientX - 20}px, ${e.clientY - 20}px, 0)`;
+            }
+        });
 
-        function switchPage(pageId) {
-            const pageIds = ['home-page', 'catalog-page', 'order-page', 'contact-page', 'owner-page'];
-            pageIds.forEach(id => {
-                const p = document.getElementById(id);
-                if (p) {
-                    p.classList.add('hidden-page');
-                    setTimeout(() => { if (p.classList.contains('hidden-page')) p.style.display = 'none'; }, 400);
-                }
-            });
+        function transitionTo(pageId, categoryFilter = 'all') {
+            const shutter = document.getElementById('page-shutter');
+            if (shutter) shutter.classList.add('active');
+            
             setTimeout(() => {
+                document.querySelectorAll('main').forEach(m => {
+                    m.classList.add('hidden');
+                    m.classList.remove('opacity-100');
+                });
+                
                 const target = document.getElementById(`${pageId}-page`);
                 if (target) {
-                    target.style.display = 'block';
-                    setTimeout(() => target.classList.remove('hidden-page'), 50);
+                    target.classList.remove('hidden');
+                    
+                    if(pageId === 'catalog') {
+                        const catFilterEl = document.getElementById('cat-filter');
+                        if(catFilterEl) catFilterEl.value = categoryFilter;
+                        renderCatalog();
+                    }
+                    if(pageId === 'home') renderHome();
+                    if(pageId === 'owner') renderOwner();
+                    // contact page is static content
+                    
+                    window.scrollTo(0,0);
+                    if (shutter) shutter.classList.remove('active');
+                    
+                    setTimeout(() => {
+                        target.classList.add('opacity-100');
+                        initObservers();
+                    }, 100);
                 }
-            }, 400);
-            if (pageId === 'catalog') renderCatalog();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 800);
         }
 
-        // Specific function to navigate and auto-filter catalog
-        function filterAndNavigate(category) {
-            const filterEl = document.getElementById('cat-filter');
-            if (filterEl) {
-                filterEl.value = category;
-            }
-            switchPage('catalog');
-            renderCatalog();
-        }
-
-        function createProductCard(p, isDark = false) {
-            const card = document.createElement('div');
-            const isSoldOut = p.stock === 0;
-            card.className = `product-card group cursor-pointer animate-scale ${isSoldOut ? 'opacity-80' : ''}`;
-            card.onclick = () => openModal(p);
-            
-            const priceHtml = p.oldPrice 
-                ? `<div class="flex items-center gap-2">
-                    <span class="text-[#d4a373] font-semibold text-sm">Rp ${p.price.toLocaleString()}</span>
-                    <span class="text-gray-400 text-xs line-through">Rp ${p.oldPrice.toLocaleString()}</span>
-                   </div>`
-                : `<p class="text-[#d4a373] font-semibold text-sm">Rp ${p.price.toLocaleString()}</p>`;
-
-            const stockHtml = isSoldOut 
-                ? `<span class="text-[9px] font-bold text-red-500 uppercase tracking-widest bg-red-50 px-2 py-0.5 rounded">Sold Out</span>`
-                : `<span class="text-[9px] font-bold text-green-600 uppercase tracking-widest bg-green-50 px-2 py-0.5 rounded">${p.stock} Available</span>`;
-
-            card.innerHTML = `
-                <div class="relative aspect-[3/4] overflow-hidden rounded-2xl ${isDark ? 'bg-stone-800' : 'bg-gray-100'} mb-4">
-                    <img src="${p.img}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${isSoldOut ? 'grayscale contrast-75' : ''}">
-                    ${p.offer && !isSoldOut ? `<div class="absolute top-4 left-4 bg-[#d4a373] text-white text-[9px] font-bold px-3 py-1 rounded-full uppercase">Save Rp ${(p.oldPrice - p.price).toLocaleString()}</div>` : ''}
-                    ${isSoldOut ? `<div class="absolute inset-0 bg-white/40 backdrop-blur-[1px] flex items-center justify-center"><span class="bg-black text-white px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest">HABIS</span></div>` : ''}
-                    <div class="quick-view absolute inset-0 bg-black/20 flex items-center justify-center">
-                        <span class="bg-white text-black px-6 py-2 rounded-full text-[10px] font-bold uppercase shadow-xl">Quick View</span>
-                    </div>
-                </div>
-                <div class="px-1">
-                    <div class="flex justify-between items-center mb-1">
-                        <p class="text-[10px] ${isDark ? 'text-gray-500' : 'text-gray-400'} uppercase tracking-widest">${p.category}</p>
-                        ${stockHtml}
-                    </div>
-                    <h3 class="font-bold text-sm mb-1 truncate ${isDark ? 'text-white' : 'text-black'}">${p.name}</h3>
-                    ${priceHtml}
-                </div>
-            `;
-            return card;
-        }
+        // --- RENDERERS ---
 
         function renderHome() {
+            // Render Categories
+            const catGrid = document.getElementById('category-grid-container');
+            if (catGrid) {
+                catGrid.innerHTML = siteData.categories.map(cat => `
+                    <div class="reveal relative group cursor-pointer overflow-hidden rounded-[2rem] aspect-[3/4] ${cat.shifted ? 'md:translate-y-12' : ''}" onclick="transitionTo('catalog', '${cat.name}')">
+                        <img src="${cat.img}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex flex-col justify-end p-12">
+                            <span class="text-white text-[9px] font-bold uppercase tracking-[0.5em] mb-2 opacity-70">${cat.type}</span>
+                            <h3 class="text-white text-4xl brand-font italic">${cat.name}</h3>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Render Featured Products
             const grid = document.getElementById('featured-grid');
-            const offerGrid = document.getElementById('special-offers-grid');
-            
             if (grid) {
                 grid.innerHTML = '';
-                products.slice(0, 4).forEach(p => grid.appendChild(createProductCard(p)));
+                siteData.products.slice(0, 4).forEach((p, i) => grid.appendChild(createProductCard(p, i)));
             }
 
-            if (offerGrid) {
-                offerGrid.innerHTML = '';
-                const offerItems = products.filter(p => p.offer).slice(0, 3);
-                offerItems.forEach(p => offerGrid.appendChild(createProductCard(p, true)));
-            }
-
-            const reviewGrid = document.getElementById('reviews-grid');
-            if (reviewGrid) {
-                reviewGrid.innerHTML = '';
-                reviews.forEach(r => {
-                    const div = document.createElement('div');
-                    div.className = "bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col h-full";
-                    div.innerHTML = `
-                        <div class="flex text-yellow-400 mb-4">${'<i data-lucide="star" class="w-4 h-4 fill-current"></i>'.repeat(r.rating)}</div>
-                        <p class="text-gray-600 text-sm italic mb-6 flex-grow">"${r.text}"</p>
-                        ${r.proofImg ? `<img src="${r.proofImg}" class="w-full h-32 object-cover rounded-xl mb-4 border border-stone-100" alt="Proof">` : ''}
-                        <div class="flex items-center gap-3 pt-4 border-t border-stone-50">
-                            <div class="w-10 h-10 rounded-full bg-[#d4a373] text-white flex items-center justify-center font-bold text-xs">${r.name[0]}</div>
-                            <div>
-                                <p class="text-sm font-bold">${r.name}</p>
-                                <p class="text-[10px] text-gray-400 uppercase tracking-tighter">${formatRelativeTime(r.timestamp)}</p>
-                            </div>
+            // Render Testimonials
+            const testGrid = document.getElementById('testimonial-grid');
+            if (testGrid) {
+                testGrid.innerHTML = siteData.reviews.map((rev, i) => `
+                    <div class="reveal group bg-white p-12 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-700" style="transition-delay: ${i*100}ms">
+                        <div class="flex mb-8 gap-1">
+                            ${Array(5).fill('<i data-lucide="star" class="w-3 h-3 fill-[#d4a373] text-[#d4a373]"></i>').join('')}
                         </div>
-                    `;
-                    reviewGrid.appendChild(div);
-                });
+                        <p class="text-stone-600 text-sm leading-relaxed mb-8 italic">"${rev.text}"</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-stone-200 overflow-hidden">
+                                    <img src="${rev.avatar}" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <h4 class="text-[10px] font-bold uppercase tracking-widest">${rev.name}</h4>
+                                    <p class="text-[8px] text-stone-400 uppercase tracking-widest">${rev.role}</p>
+                                </div>
+                            </div>
+                            ${rev.proof ? `<button onclick="viewReviewProof('${rev.proof}')" class="text-[8px] font-bold uppercase tracking-widest text-[#d4a373] border-b border-[#d4a373]/20 hover:border-[#d4a373] transition-all">View Proof</button>` : ''}
+                        </div>
+                    </div>
+                `).join('');
             }
-            lucide.createIcons();
+
+            // Owner Snippet
+            const ownerFeatureImg = document.getElementById('owner-feature-img');
+            const ownerShortBio = document.getElementById('owner-short-bio');
+            if (ownerFeatureImg) ownerFeatureImg.src = siteData.owner.featureImg;
+            if (ownerShortBio) ownerShortBio.innerText = siteData.owner.shortBio;
+
+            // Socials
+            const socialsContainer = document.getElementById('socials-container');
+            if (socialsContainer) {
+                socialsContainer.innerHTML = siteData.socials.map(s => `
+                    <a href="${s.link}" class="text-[10px] uppercase tracking-[0.4em] font-bold opacity-40 hover:opacity-100 transition-opacity">${s.name}</a>
+                `).join('');
+            }
+
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+            addHoverListeners();
+        }
+
+        function renderOwner() {
+            const name = document.getElementById('full-owner-name');
+            const img = document.getElementById('full-owner-img');
+            const bio = document.getElementById('full-owner-bio');
+            if (name) name.innerText = siteData.owner.name;
+            if (img) img.src = siteData.owner.img;
+            if (bio) bio.innerText = siteData.owner.fullBio;
+            if (typeof lucide !== 'undefined') lucide.createIcons();
         }
 
         function renderCatalog() {
             const grid = document.getElementById('catalog-grid');
             if (!grid) return;
-            const cat = document.getElementById('cat-filter').value;
-            const sort = document.getElementById('sort-order').value;
-            let list = cat === 'all' ? [...products] : products.filter(p => p.category === cat);
-            if (sort === 'low') list.sort((a,b) => a.price - b.price);
-            if (sort === 'high') list.sort((a,b) => b.price - a.price);
-            grid.innerHTML = '';
-            list.forEach(p => grid.appendChild(createProductCard(p)));
-            lucide.createIcons();
-        }
 
-        function openModal(p) {
-            activeProduct = p;
-            const isSoldOut = p.stock === 0;
+            const filterEl = document.getElementById('cat-filter');
+            const sortEl = document.getElementById('sort-order');
+            const filter = filterEl ? filterEl.value : 'all';
+            const sort = sortEl ? sortEl.value : 'new';
             
-            document.getElementById('modal-img').src = p.img;
-            document.getElementById('modal-title').innerText = p.name;
-            
-            // Stock logic
-            const stockBadge = document.getElementById('modal-stock-badge');
-            stockBadge.innerText = isSoldOut ? 'Out of Stock' : `Available: ${p.stock}`;
-            stockBadge.className = `text-[10px] font-bold px-3 py-1 rounded-full uppercase border ${isSoldOut ? 'border-red-200 text-red-500 bg-red-50' : 'border-green-200 text-green-600 bg-green-50'}`;
-            
-            document.getElementById('modal-sold-overlay').style.display = isSoldOut ? 'flex' : 'none';
-            document.getElementById('modal-stock-warning').style.display = isSoldOut ? 'block' : 'none';
-            
-            const orderBtn = document.getElementById('modal-order-btn');
-            orderBtn.disabled = isSoldOut;
-            document.getElementById('btn-text').innerText = isSoldOut ? 'Out of Stock' : 'Order via WhatsApp';
-
-            const priceEl = document.getElementById('modal-price');
-            if (p.oldPrice) {
-                priceEl.innerHTML = `Rp ${p.price.toLocaleString()} <span class="text-gray-400 text-sm line-through ml-2 font-normal">Rp ${p.oldPrice.toLocaleString()}</span>`;
-            } else {
-                priceEl.innerText = `Rp ${p.price.toLocaleString()}`;
+            // Re-populate category filter if empty
+            const catSelect = document.getElementById('cat-filter');
+            if(catSelect && catSelect.options.length <= 1) {
+                siteData.categories.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.name;
+                    opt.innerText = c.name;
+                    catSelect.appendChild(opt);
+                });
             }
 
-            document.getElementById('modal-desc').innerText = p.desc;
-            document.getElementById('modal-tag').style.display = (p.offer && !isSoldOut) ? 'block' : 'none';
-            document.getElementById('product-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            lucide.createIcons();
+            let list = filter === 'all' ? [...siteData.products] : siteData.products.filter(p => p.category === filter);
+            if (sort === 'low') list.sort((a,b) => a.price - b.price);
+            if (sort === 'high') list.sort((a,b) => b.price - a.price);
+
+            grid.innerHTML = '';
+            list.forEach((p, i) => grid.appendChild(createProductCard(p, i)));
+            initObservers();
+            addHoverListeners();
+        }
+
+        function createProductCard(p, index) {
+            const isOffer = p.oldPrice && p.oldPrice > p.price;
+            const isSoldOut = p.stock === 0;
+
+            const div = document.createElement('div');
+            div.className = `reveal group cursor-pointer`;
+            div.style.transitionDelay = `${index * 50}ms`;
+            div.onclick = () => openModal(p);
+            div.innerHTML = `
+                <div class="relative img-container rounded-[2rem] aspect-[3/4] mb-8 bg-stone-100">
+                    <img src="${p.img}" class="w-full h-full object-cover ${isSoldOut ? 'grayscale' : ''}">
+                    
+                    ${isOffer ? `
+                        <div class="absolute top-6 left-6 z-10">
+                            <span class="bg-[#9f1239] text-white text-[8px] font-bold uppercase tracking-widest px-4 py-2 rounded-full shadow-lg">Special Offer</span>
+                        </div>
+                    ` : ''}
+
+                    ${isSoldOut ? `
+                        <div class="absolute inset-0 flex items-center justify-center bg-white/40 backdrop-blur-[2px]">
+                            <span class="bg-white/90 text-[#1c1917] px-8 py-3 rounded-full text-[9px] font-bold uppercase tracking-widest shadow-xl">Archive Only</span>
+                        </div>
+                    ` : ''}
+                </div>
+                <div>
+                    <span class="text-[9px] text-[#d4a373] uppercase tracking-[0.4em] font-bold mb-2 block">${p.category}</span>
+                    <h3 class="brand-font text-xl italic mb-1">${p.name}</h3>
+                    <div class="flex items-center gap-4">
+                        <p class="text-xs text-stone-500 font-medium">Rp ${p.price.toLocaleString()}</p>
+                        ${isOffer ? `<p class="text-[10px] text-stone-300 line-through">Rp ${p.oldPrice.toLocaleString()}</p>` : ''}
+                    </div>
+                </div>
+            `;
+            return div;
+        }
+
+        // --- UTILS ---
+        function openModal(p) {
+            activeProduct = p;
+            const img = document.getElementById('modal-img');
+            const title = document.getElementById('modal-title');
+            const cat = document.getElementById('modal-cat');
+            const price = document.getElementById('modal-price');
+            const oldPrice = document.getElementById('modal-old-price');
+            const offerTag = document.getElementById('modal-offer-tag');
+            const stockInfo = document.getElementById('modal-stock-info');
+            const desc = document.getElementById('modal-desc');
+            const btn = document.getElementById('modal-btn');
+            const content = document.getElementById('modal-content');
+            const modal = document.getElementById('product-modal');
+
+            if (img) img.src = p.img;
+            if (title) title.innerText = p.name;
+            if (cat) cat.innerText = p.category;
+            if (price) price.innerText = `Rp ${p.price.toLocaleString()}`;
+            
+            // Handle Offer
+            if(p.oldPrice && oldPrice && offerTag) {
+                oldPrice.innerText = `Rp ${p.oldPrice.toLocaleString()}`;
+                oldPrice.classList.remove('hidden');
+                offerTag.classList.remove('hidden');
+            } else if (oldPrice && offerTag) {
+                oldPrice.classList.add('hidden');
+                offerTag.classList.add('hidden');
+            }
+
+            // Handle Stock
+            if(stockInfo && btn) {
+                if(p.stock === 0) {
+                    stockInfo.innerText = "Current Status: Archived (Sold Out)";
+                    stockInfo.classList.add('text-[#9f1239]');
+                    btn.innerText = "Request Restock Notification";
+                    btn.classList.replace('bg-stone-900', 'bg-stone-200');
+                    btn.classList.add('text-stone-600');
+                } else {
+                    stockInfo.innerText = p.stock < 5 ? `Availability: Limited (${p.stock} remaining)` : "Availability: In Stock";
+                    stockInfo.classList.remove('text-[#9f1239]');
+                    btn.innerText = "Enquire via WhatsApp";
+                    btn.classList.replace('bg-stone-200', 'bg-stone-900');
+                    btn.classList.remove('text-stone-600');
+                }
+            }
+
+            if (desc) desc.innerText = p.desc;
+            
+            if (modal) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    if (content) content.classList.remove('scale-90', 'opacity-0');
+                }, 10);
+                document.body.style.overflow = 'hidden';
+            }
         }
 
         function closeModal() {
-            document.getElementById('product-modal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
+            const content = document.getElementById('modal-content');
+            const modal = document.getElementById('product-modal');
+            if (content) content.classList.add('scale-90', 'opacity-0');
+            setTimeout(() => {
+                if (modal) modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 500);
+        }
+
+        function viewReviewProof(imgUrl) {
+            const proofImg = document.getElementById('proof-img');
+            const modal = document.getElementById('proof-modal');
+            const content = document.getElementById('proof-content');
+
+            if (proofImg) proofImg.src = imgUrl;
+            if (modal) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    if (content) content.classList.remove('scale-90', 'opacity-0');
+                }, 10);
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeProof() {
+            const content = document.getElementById('proof-content');
+            const modal = document.getElementById('proof-modal');
+            if (content) content.classList.add('scale-90', 'opacity-0');
+            setTimeout(() => {
+                if (modal) modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 500);
         }
 
         function orderWhatsApp() {
-            let text = "Halo Ima Asadah! Saya ingin bertanya tentang layanan Anda.";
-            if (activeProduct && activeProduct.stock > 0) {
-                text = `Halo Ima Asadah! Saya tertarik dengan "${activeProduct.name}". Bisakah saya berkonsultasi tentang ukuran?`;
+            let msg = "";
+            if (activeProduct) {
+                if(activeProduct.stock === 0) {
+                    msg = `Hello Ima Asadah! I missed out on the ${activeProduct.name}. Will it be available for custom order or restocked?`;
+                } else {
+                    msg = `Hello Ima Asadah! I am interested in the ${activeProduct.name}.`;
+                }
             } else {
-                text = `Halo Ima Asadah! Saya tertarik untuk memulai proyek Custom Tailoring. Bisakah kita jadwalkan konsultasi?`;
+                msg = "Hello Ima Asadah! I'd like to book a bespoke tailoring consultation or discuss a custom commission.";
             }
-            window.open(`https://wa.me/6285732335094?text=${encodeURIComponent(text)}`, '_blank');
+            window.open(`https://wa.me/6285732335094?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        window.onload = () => { renderHome(); lucide.createIcons(); }
+        function addHoverListeners() {
+            document.querySelectorAll('a, button, select, .cursor-pointer').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    if (follower) follower.style.transform += ' scale(1.5)';
+                });
+                el.addEventListener('mouseleave', () => {
+                    if (follower) follower.style.transform = follower.style.transform.replace(' scale(1.5)', '');
+                });
+            });
+        }
+
+        function initObservers() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('active');
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        window.onload = () => {
+            renderHome();
+            setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                if (preloader) {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                        initObservers();
+                    }, 1200);
+                }
+            }, 1000);
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        };
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroImg = document.getElementById('hero-img');
+            if(heroImg) heroImg.style.transform = `scale(1.1) translateY(${scrolled * 0.15}px)`;
+            
+            const nav = document.getElementById('navbar');
+            if(nav) {
+                if(scrolled > 50) {
+                    nav.classList.add('py-4', 'bg-white/90');
+                    nav.classList.remove('py-6', 'bg-white/60');
+                } else {
+                    nav.classList.add('py-6', 'bg-white/60');
+                    nav.classList.remove('py-4', 'bg-white/90');
+                }
+            }
+        });
     </script>
 </body>
 </html>
