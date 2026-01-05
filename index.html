@@ -1,24 +1,38 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ima Asadah | Luxury Atelier</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        :root { --brand: #d4a373; --dark: #1c1917; --soft-bg: #fafaf9; --offer: #9f1239; }
-        
-        body { 
-            font-family: 'Inter', sans-serif; 
+        :root {
+            --brand: #d4a373;
+            --dark: #1c1917;
+            --soft-bg: #fafaf9;
+            --offer: #9f1239;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
             background-color: var(--soft-bg);
             cursor: none;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        h1, h2, h3, .brand-font { font-family: 'Playfair Display', serif; letter-spacing: -0.02em; }
+        h1,
+        h2,
+        h3,
+        .brand-font {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: -0.02em;
+        }
 
         /* Luxury Preloader */
         #preloader {
@@ -31,6 +45,7 @@
             justify-content: center;
             transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1);
         }
+
         .loader-line {
             width: 100px;
             height: 1px;
@@ -38,20 +53,32 @@
             position: relative;
             overflow: hidden;
         }
+
         .loader-line::after {
             content: '';
             position: absolute;
-            left: 0; top: 0; height: 100%; width: 50%;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 50%;
             background: var(--brand);
             animation: loading 1.5s infinite ease-in-out;
         }
+
         @keyframes loading {
-            0% { left: -50%; } 100% { left: 100%; }
+            0% {
+                left: -50%;
+            }
+
+            100% {
+                left: 100%;
+            }
         }
 
         /* Fluid Custom Cursor */
         #cursor {
-            width: 8px; height: 8px;
+            width: 8px;
+            height: 8px;
             background: var(--brand);
             border-radius: 50%;
             position: fixed;
@@ -60,8 +87,10 @@
             opacity: 0;
             transition: transform 0.1s;
         }
+
         #cursor-follower {
-            width: 40px; height: 40px;
+            width: 40px;
+            height: 40px;
             border: 0.5px solid rgba(212, 163, 115, 0.4);
             border-radius: 50%;
             position: fixed;
@@ -74,7 +103,10 @@
         /* Editorial Grain Effect */
         .grain-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-image: url("https://grainy-gradients.vercel.app/noise.svg");
             opacity: 0.04;
             pointer-events: none;
@@ -86,14 +118,24 @@
             transform: translateY(40px) scale(0.98);
             transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
         .reveal.active {
             opacity: 1;
             transform: translateY(0) scale(1);
         }
 
-        .img-container { overflow: hidden; position: relative; }
-        .img-container img { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
-        .img-container:hover img { transform: scale(1.08); }
+        .img-container {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .img-container img {
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .img-container:hover img {
+            transform: scale(1.08);
+        }
 
         .nav-link {
             position: relative;
@@ -101,30 +143,55 @@
             color: #78716c;
             transition: color 0.4s;
         }
+
         .nav-link::after {
             content: '';
             position: absolute;
-            bottom: 0; left: 0; width: 0; height: 1px;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
             background: var(--brand);
             transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1);
         }
-        .nav-link:hover { color: var(--dark); }
-        .nav-link:hover::after { width: 100%; }
+
+        .nav-link:hover {
+            color: var(--dark);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
 
         .btn-luxury {
             position: relative;
             overflow: hidden;
             transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
+
         .btn-luxury:hover:not(:disabled) {
             transform: translateY(-4px);
             box-shadow: 0 20px 40px -10px rgba(212, 163, 115, 0.3);
         }
-        .btn-luxury:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
 
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #e7e5e4; border-radius: 10px; }
+        .btn-luxury:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            filter: grayscale(1);
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #e7e5e4;
+            border-radius: 10px;
+        }
 
         #page-shutter {
             position: fixed;
@@ -134,7 +201,10 @@
             z-index: 9999;
             transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
         }
-        #page-shutter.active { transform: translateY(0); }
+
+        #page-shutter.active {
+            transform: translateY(0);
+        }
 
         .marquee-container {
             overflow: hidden;
@@ -142,31 +212,50 @@
             background: #1c1917;
             padding: 10px 0;
         }
+
         .marquee-content {
             display: inline-block;
             animation: marquee 40s linear infinite;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255, 255, 255, 0.7);
             font-size: 9px;
             letter-spacing: 0.3em;
             text-transform: uppercase;
             font-weight: 600;
         }
+
         @keyframes marquee {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
         }
 
-        .screenshot-frame { border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
-        
+        .screenshot-frame {
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        }
+
         @media (max-width: 768px) {
-            body { cursor: auto; }
-            #cursor, #cursor-follower { display: none; }
+            body {
+                cursor: auto;
+            }
+
+            #cursor,
+            #cursor-follower {
+                display: none;
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <div id="preloader"><div class="loader-line"></div></div>
+    <div id="preloader">
+        <div class="loader-line"></div>
+    </div>
     <div id="cursor"></div>
     <div id="cursor-follower"></div>
     <div class="grain-overlay"></div>
@@ -174,38 +263,50 @@
 
     <div class="marquee-container sticky top-0 z-[60]">
         <div class="marquee-content">
-            <span class="px-12">Limited Bespoke Slots Available &nbsp; • &nbsp; Free Worldwide Shipping on orders over Rp 2.000.000 &nbsp; • &nbsp; Luxury Handcrafted Tailoring &nbsp; • &nbsp; </span>
-            <span class="px-12">Limited Bespoke Slots Available &nbsp; • &nbsp; Free Worldwide Shipping on orders over Rp 2.000.000 &nbsp; • &nbsp; Luxury Handcrafted Tailoring &nbsp; • &nbsp; </span>
+            <span class="px-12">Limited Bespoke Slots Available &nbsp; • &nbsp; Free Worldwide Shipping on orders over
+                Rp 2.000.000 &nbsp; • &nbsp; Luxury Handcrafted Tailoring &nbsp; • &nbsp; </span>
+            <span class="px-12">Limited Bespoke Slots Available &nbsp; • &nbsp; Free Worldwide Shipping on orders over
+                Rp 2.000.000 &nbsp; • &nbsp; Luxury Handcrafted Tailoring &nbsp; • &nbsp; </span>
         </div>
     </div>
 
-    <nav id="navbar" class="w-full bg-white/60 backdrop-blur-xl z-50 border-b border-stone-100 transition-all duration-700">
+    <nav id="navbar"
+        class="w-full bg-white/60 backdrop-blur-xl z-50 border-b border-stone-100 transition-all duration-700">
         <div class="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center">
             <div class="hidden md:flex items-center space-x-10 text-[9px] font-bold uppercase tracking-[0.3em]">
                 <a href="javascript:void(0)" onclick="transitionTo('home')" class="nav-link">Home</a>
                 <a href="javascript:void(0)" onclick="transitionTo('catalog')" class="nav-link">Catalog</a>
             </div>
-            <div class="brand-font text-2xl font-bold tracking-[-0.05em] cursor-pointer" onclick="transitionTo('home')">IMA ASADAH</div>
+            <div class="brand-font text-2xl font-bold tracking-[-0.05em] cursor-pointer" onclick="transitionTo('home')">
+                IMA ASADAH</div>
             <div class="flex items-center space-x-10 text-[9px] font-bold uppercase tracking-[0.3em]">
                 <div class="hidden md:flex space-x-10">
                     <a href="javascript:void(0)" onclick="transitionTo('owner')" class="nav-link">Atelier</a>
                     <a href="javascript:void(0)" onclick="transitionTo('contact')" class="nav-link">Contact</a>
                 </div>
-                <button onclick="transitionTo('catalog')" class="hover:text-[#d4a373] transition-colors"><i data-lucide="search" class="w-4 h-4"></i></button>
+                <button onclick="transitionTo('catalog')" class="hover:text-[#d4a373] transition-colors"><i
+                        data-lucide="search" class="w-4 h-4"></i></button>
             </div>
         </div>
     </nav>
 
     <main id="home-page" class="opacity-100 transition-opacity duration-1000">
         <section class="relative h-[92vh] flex items-center justify-center overflow-hidden bg-stone-200">
-            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070" class="absolute inset-0 w-full h-full object-cover brightness-[0.85] scale-110" alt="Hero">
+            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070"
+                class="absolute inset-0 w-full h-full object-cover brightness-[0.85] scale-110" alt="Hero">
             <div class="relative z-10 text-center text-white px-6">
                 <div class="reveal active">
-                    <span class="text-[10px] uppercase tracking-[0.8em] font-medium mb-8 block opacity-80">Since 2015 — Jakarta</span>
-                    <h1 class="text-7xl md:text-[10rem] font-bold mb-10 leading-[0.85] italic tracking-tighter">Pure<br>Elegance</h1>
+                    <span class="text-[10px] uppercase tracking-[0.8em] font-medium mb-8 block opacity-80">Since 2015 —
+                        Jakarta</span>
+                    <h1 class="text-7xl md:text-[10rem] font-bold mb-10 leading-[0.85] italic tracking-tighter">
+                        Pure<br>Elegance</h1>
                     <div class="flex flex-col sm:flex-row gap-8 justify-center items-center mt-12">
-                        <button onclick="transitionTo('catalog')" class="btn-luxury bg-white text-stone-900 px-12 py-5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em]">View Collection</button>
-                        <button onclick="transitionTo('owner')" class="text-white border-b border-white/30 pb-1 text-[10px] font-bold uppercase tracking-[0.2em] hover:border-white transition-all">The Atelier Story</button>
+                        <button onclick="transitionTo('catalog')"
+                            class="btn-luxury bg-white text-stone-900 px-12 py-5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em]">View
+                            Collection</button>
+                        <button onclick="transitionTo('owner')"
+                            class="text-white border-b border-white/30 pb-1 text-[10px] font-bold uppercase tracking-[0.2em] hover:border-white transition-all">The
+                            Atelier Story</button>
                     </div>
                 </div>
             </div>
@@ -218,10 +319,12 @@
         <section class="py-40 px-8 max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-end mb-24 reveal">
                 <div>
-                    <span class="text-[#d4a373] text-[9px] font-bold uppercase tracking-[0.5em] mb-4 block">New Arrivals</span>
+                    <span class="text-[#d4a373] text-[9px] font-bold uppercase tracking-[0.5em] mb-4 block">New
+                        Arrivals</span>
                     <h2 class="text-5xl md:text-7xl brand-font italic">Seasonal Picks</h2>
                 </div>
-                <p class="max-w-xs text-stone-400 text-xs leading-loose font-light italic mt-6 md:mt-0">Curated pieces that define modern sophistication through timeless silhouettes.</p>
+                <p class="max-w-xs text-stone-400 text-xs leading-loose font-light italic mt-6 md:mt-0">Curated pieces
+                    that define modern sophistication through timeless silhouettes.</p>
             </div>
             <div id="featured-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-12"></div>
         </section>
@@ -229,7 +332,8 @@
         <section class="py-40 bg-stone-100 overflow-hidden">
             <div class="max-w-7xl mx-auto px-8">
                 <div class="text-center mb-32 reveal">
-                    <span class="text-[#d4a373] text-[9px] font-bold uppercase tracking-[0.5em] mb-4 block">Kind Words</span>
+                    <span class="text-[#d4a373] text-[9px] font-bold uppercase tracking-[0.5em] mb-4 block">Kind
+                        Words</span>
                     <h2 class="text-5xl brand-font italic">Atelier Voices</h2>
                 </div>
                 <div id="testimonial-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-16"></div>
@@ -239,31 +343,38 @@
         <section class="py-32 bg-white relative">
             <div class="max-w-7xl mx-auto px-8 grid md:grid-cols-2 gap-24 items-center">
                 <div class="reveal img-container rounded-[2rem]">
-                    <img id="owner-feature-img" src="https://images.unsplash.com/photo-1537832816519-689ad163238b?q=80&w=2070" class="w-full aspect-[4/5] object-cover" alt="Detail">
+                    <img id="owner-feature-img"
+                        src="https://images.unsplash.com/photo-1537832816519-689ad163238b?q=80&w=2070"
+                        class="w-full aspect-[4/5] object-cover" alt="Detail">
                 </div>
                 <div class="reveal space-y-12">
                     <div>
-                        <span class="text-[#d4a373] text-[9px] font-bold uppercase tracking-[0.5em] mb-4 block">Our Ethos</span>
+                        <span class="text-[#d4a373] text-[9px] font-bold uppercase tracking-[0.5em] mb-4 block">Our
+                            Ethos</span>
                         <h2 class="text-5xl brand-font italic mb-10">Meticulous Detail,<br>Personalized Fit</h2>
-                        <p class="text-stone-500 text-lg font-light leading-relaxed">Kami percaya bahwa setiap jahitan membawa cerita, menggabungkan tradisi ketelitian dengan estetika modern.</p>
+                        <p class="text-stone-500 text-lg font-light leading-relaxed">Kami percaya bahwa setiap jahitan
+                            membawa cerita, menggabungkan tradisi ketelitian dengan estetika modern.</p>
                     </div>
                     <div class="space-y-8">
                         <div class="flex gap-6 group">
                             <div class="text-[#d4a373] pt-1"><i data-lucide="award" class="w-5 h-5"></i></div>
                             <div>
                                 <h4 class="text-[10px] font-bold uppercase tracking-widest mb-2">Premium Sourcing</h4>
-                                <p class="text-xs text-stone-400 font-light">Silk, Linen, and Lace sourced from the finest mills globally.</p>
+                                <p class="text-xs text-stone-400 font-light">Silk, Linen, and Lace sourced from the
+                                    finest mills globally.</p>
                             </div>
                         </div>
                         <div class="flex gap-6 group">
                             <div class="text-[#d4a373] pt-1"><i data-lucide="heart" class="w-5 h-5"></i></div>
                             <div>
                                 <h4 class="text-[10px] font-bold uppercase tracking-widest mb-2">Soulful Tailoring</h4>
-                                <p class="text-xs text-stone-400 font-light">Designed to embrace every curve with grace and ease.</p>
+                                <p class="text-xs text-stone-400 font-light">Designed to embrace every curve with grace
+                                    and ease.</p>
                             </div>
                         </div>
                     </div>
-                    <button onclick="transitionTo('owner')" class="btn-luxury inline-flex items-center gap-6 bg-stone-900 text-white px-12 py-5 rounded-full text-[10px] font-bold uppercase tracking-[0.3em]">
+                    <button onclick="transitionTo('owner')"
+                        class="btn-luxury inline-flex items-center gap-6 bg-stone-900 text-white px-12 py-5 rounded-full text-[10px] font-bold uppercase tracking-[0.3em]">
                         Read Our Story <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -278,8 +389,10 @@
                         &copy; 2024 Atelier Ima Asadah.<br>Handcrafted in Indonesia.
                     </div>
                     <div class="flex flex-col space-y-4 text-[10px] uppercase tracking-widest font-bold">
-                        <a href="javascript:void(0)" onclick="transitionTo('catalog')" class="hover:text-[#d4a373]">Lookbook</a>
-                        <a href="javascript:void(0)" onclick="transitionTo('contact')" class="hover:text-[#d4a373]">Book Appointment</a>
+                        <a href="javascript:void(0)" onclick="transitionTo('catalog')"
+                            class="hover:text-[#d4a373]">Lookbook</a>
+                        <a href="javascript:void(0)" onclick="transitionTo('contact')" class="hover:text-[#d4a373]">Book
+                            Appointment</a>
                     </div>
                     <div class="text-[10px] text-stone-500 leading-loose tracking-widest uppercase md:text-right">
                         Jl. Fashionista No. 123,<br>Jakarta Selatan, ID.
@@ -292,20 +405,25 @@
     <main id="owner-page" class="hidden opacity-0 py-40 px-8 bg-stone-50">
         <div class="max-w-4xl mx-auto">
             <div class="reveal mb-24 text-center">
-                <span class="text-[#d4a373] text-[9px] font-bold uppercase tracking-[0.5em] mb-4 block">The Founder</span>
+                <span class="text-[#d4a373] text-[9px] font-bold uppercase tracking-[0.5em] mb-4 block">The
+                    Founder</span>
                 <h2 class="text-6xl md:text-8xl brand-font italic mb-12">Ima Asadah</h2>
             </div>
             <div class="grid md:grid-cols-2 gap-16 items-start mb-32">
                 <div class="reveal img-container rounded-[3rem]">
-                    <img src="https://raw.githubusercontent.com/rokeykhan542/ImaAsadah/main/photos/Gemini_Generated_Image_hv40a7hv40a7hv40.png" class="w-full object-cover aspect-[3/4]">
+                    <img src="https://raw.githubusercontent.com/rokeykhan542/ImaAsadah/main/photos/Gemini_Generated_Image_hv40a7hv40a7hv40.png"
+                        class="w-full object-cover aspect-[3/4]">
                 </div>
                 <div class="reveal space-y-8 py-12">
                     <p class="text-stone-600 text-lg leading-loose font-light italic">
-                        Lahir dari kecintaan pada kain berkualitas tinggi dan desain minimalis, Ima Asadah membangun atelier ini dengan prinsip 'Simplicity is the ultimate sophistication'.
+                        Lahir dari kecintaan pada kain berkualitas tinggi dan desain minimalis, Ima Asadah membangun
+                        atelier ini dengan prinsip 'Simplicity is the ultimate sophistication'.
                     </p>
                     <div class="pt-8 border-t border-stone-200">
                         <h4 class="text-[10px] font-bold uppercase tracking-widest mb-4">Core Philosophy</h4>
-                        <p class="text-sm text-stone-500 leading-relaxed">Setiap wanita berhak merasa istimewa. Kami tidak hanya membuat pakaian, kami membangun kepercayaan diri melalui siluet yang presisi.</p>
+                        <p class="text-sm text-stone-500 leading-relaxed">Setiap wanita berhak merasa istimewa. Kami
+                            tidak hanya membuat pakaian, kami membangun kepercayaan diri melalui siluet yang presisi.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -317,13 +435,15 @@
             <div class="flex flex-col md:flex-row justify-between items-center mb-32 border-b border-stone-100 pb-12">
                 <h2 class="text-6xl brand-font italic">Archive</h2>
                 <div class="flex gap-12 mt-12 md:mt-0">
-                    <select id="cat-filter" onchange="renderCatalog()" class="bg-transparent border-none text-[10px] font-bold uppercase tracking-[0.3em] outline-none cursor-pointer hover:text-[#d4a373]">
+                    <select id="cat-filter" onchange="renderCatalog()"
+                        class="bg-transparent border-none text-[10px] font-bold uppercase tracking-[0.3em] outline-none cursor-pointer hover:text-[#d4a373]">
                         <option value="all">Everything</option>
                         <option value="Dresses">Dresses</option>
                         <option value="Tops">Tops</option>
                         <option value="Outerwear">Outerwear</option>
                     </select>
-                    <select id="sort-order" onchange="renderCatalog()" class="bg-transparent border-none text-[10px] font-bold uppercase tracking-[0.3em] outline-none cursor-pointer hover:text-[#d4a373]">
+                    <select id="sort-order" onchange="renderCatalog()"
+                        class="bg-transparent border-none text-[10px] font-bold uppercase tracking-[0.3em] outline-none cursor-pointer hover:text-[#d4a373]">
                         <option value="new">Latest</option>
                         <option value="low">Price: Low</option>
                         <option value="high">Price: High</option>
@@ -337,14 +457,16 @@
     <main id="contact-page" class="hidden opacity-0 py-40 px-8 bg-stone-50">
         <div class="max-w-7xl mx-auto">
             <div class="reveal mb-24">
-                <span class="text-[#d4a373] text-[9px] font-bold uppercase tracking-[0.5em] mb-4 block">Get in Touch</span>
+                <span class="text-[#d4a373] text-[9px] font-bold uppercase tracking-[0.5em] mb-4 block">Get in
+                    Touch</span>
                 <h2 class="text-6xl md:text-8xl brand-font italic mb-4">The Atelier</h2>
             </div>
             <div class="grid lg:grid-cols-12 gap-16">
                 <div class="lg:col-span-4 space-y-16 reveal">
                     <div>
                         <h4 class="text-[10px] font-bold uppercase tracking-widest text-[#d4a373] mb-6">Location</h4>
-                        <p class="text-stone-600 text-lg leading-relaxed font-light">Jl. Fashionista No. 123, Kebayoran Baru, Jakarta Selatan</p>
+                        <p class="text-stone-600 text-lg leading-relaxed font-light">Jl. Fashionista No. 123, Kebayoran
+                            Baru, Jakarta Selatan</p>
                     </div>
                     <div>
                         <h4 class="text-[10px] font-bold uppercase tracking-widest text-[#d4a373] mb-6">Hours</h4>
@@ -353,41 +475,60 @@
                             <li class="flex justify-between"><span>Saturday</span> <span>11:00 - 16:00</span></li>
                         </ul>
                     </div>
-                    <button onclick="window.open('https://wa.me/6285732335094')" class="btn-luxury w-full bg-stone-900 text-white py-6 rounded-full text-[10px] font-bold uppercase tracking-[0.3em]">Enquire via WhatsApp</button>
+                    <button onclick="window.open('https://wa.me/6285732335094')"
+                        class="btn-luxury w-full bg-stone-900 text-white py-6 rounded-full text-[10px] font-bold uppercase tracking-[0.3em]">Enquire
+                        via WhatsApp</button>
                 </div>
                 <div class="lg:col-span-8 bg-stone-200 rounded-[3rem] h-[500px] overflow-hidden">
-                    <iframe class="w-full h-full grayscale opacity-60" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126906!2d106.719!3d-6.284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e945e3fa73%3A0x196132034058f435!2sSouth%20Jakarta!5e0!3m2!1sen!2sid!4v1715638100234"></iframe>
+                    <iframe class="w-full h-full grayscale opacity-60"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126906!2d106.719!3d-6.284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e945e3fa73%3A0x196132034058f435!2sSouth%20Jakarta!5e0!3m2!1sen!2sid!4v1715638100234"></iframe>
                 </div>
             </div>
         </div>
     </main>
 
     <!-- Modals -->
-    <div id="product-modal" class="fixed inset-0 z-[100] hidden bg-stone-900/60 backdrop-blur-xl flex items-center justify-center p-8">
-        <div class="bg-white w-full max-w-5xl rounded-[3rem] overflow-hidden flex flex-col md:flex-row scale-90 opacity-0 transition-all duration-700" id="modal-content">
-            <button onclick="closeModal()" class="absolute top-10 right-10 z-10 p-2 hover:rotate-90 transition-transform"><i data-lucide="x" class="w-6 h-6 text-stone-400"></i></button>
+    <div id="product-modal"
+        class="fixed inset-0 z-[100] hidden bg-stone-900/60 backdrop-blur-xl flex items-center justify-center p-8">
+        <div class="bg-white w-full max-w-5xl rounded-[3rem] overflow-hidden flex flex-col md:flex-row scale-90 opacity-0 transition-all duration-700"
+            id="modal-content">
+            <button onclick="closeModal()"
+                class="absolute top-10 right-10 z-10 p-2 hover:rotate-90 transition-transform"><i data-lucide="x"
+                    class="w-6 h-6 text-stone-400"></i></button>
             <div class="w-full md:w-1/2 aspect-[4/5] img-container bg-stone-100">
-                <div id="modal-sold-out" class="hidden absolute inset-0 z-10 bg-black/40 backdrop-blur-[2px] flex items-center justify-center">
-                    <span class="text-white text-[10px] font-bold uppercase tracking-[0.5em] border border-white/30 px-6 py-3 rounded-full">Currently Out of Stock</span>
+                <div id="modal-sold-out"
+                    class="hidden absolute inset-0 z-10 bg-black/40 backdrop-blur-[2px] flex items-center justify-center">
+                    <span
+                        class="text-white text-[10px] font-bold uppercase tracking-[0.5em] border border-white/30 px-6 py-3 rounded-full">Currently
+                        Out of Stock</span>
                 </div>
                 <img id="modal-img" src="" class="w-full h-full object-cover">
             </div>
             <div class="w-full md:w-1/2 p-16 flex flex-col justify-center">
                 <div class="flex items-center gap-4 mb-4">
-                    <span id="modal-cat" class="text-[9px] text-[#d4a373] uppercase tracking-[0.5em] font-bold block">Category</span>
-                    <span id="modal-offer-badge" class="hidden text-[8px] bg-rose-900 text-white px-3 py-1 rounded-full uppercase tracking-widest font-bold">Limited Offer</span>
+                    <span id="modal-cat"
+                        class="text-[9px] text-[#d4a373] uppercase tracking-[0.5em] font-bold block">Category</span>
+                    <span id="modal-offer-badge"
+                        class="hidden text-[8px] bg-rose-900 text-white px-3 py-1 rounded-full uppercase tracking-widest font-bold">Limited
+                        Offer</span>
                 </div>
                 <h3 id="modal-title" class="text-5xl font-bold mb-6 brand-font italic">Product Name</h3>
                 <p id="modal-price" class="text-2xl font-light text-stone-400 mb-10">Rp 0</p>
-                <p id="modal-desc" class="text-stone-500 text-sm leading-relaxed mb-12 font-light">Detailed description...</p>
-                <button id="modal-btn" onclick="window.open('https://wa.me/6285732335094')" class="btn-luxury w-full bg-stone-900 text-white py-6 rounded-full text-[10px] font-bold uppercase tracking-[0.3em]">Check Availability</button>
+                <p id="modal-desc" class="text-stone-500 text-sm leading-relaxed mb-12 font-light">Detailed
+                    description...</p>
+                <button id="modal-btn" onclick="window.open('https://wa.me/6285732335094')"
+                    class="btn-luxury w-full bg-stone-900 text-white py-6 rounded-full text-[10px] font-bold uppercase tracking-[0.3em]">Check
+                    Availability</button>
             </div>
         </div>
     </div>
 
-    <div id="proof-modal" class="fixed inset-0 z-[110] hidden bg-stone-900/40 backdrop-blur-md flex items-center justify-center p-8">
+    <div id="proof-modal"
+        class="fixed inset-0 z-[110] hidden bg-stone-900/40 backdrop-blur-md flex items-center justify-center p-8">
         <div class="relative max-w-lg w-full scale-90 opacity-0 transition-all duration-700" id="proof-content">
-            <button onclick="closeProof()" class="absolute -top-12 right-0 p-2 text-white hover:rotate-90 transition-transform"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <button onclick="closeProof()"
+                class="absolute -top-12 right-0 p-2 text-white hover:rotate-90 transition-transform"><i data-lucide="x"
+                    class="w-6 h-6"></i></button>
             <div class="bg-white p-4 rounded-3xl screenshot-frame">
                 <img id="proof-img" src="" class="w-full h-auto rounded-2xl shadow-inner">
             </div>
@@ -406,7 +547,27 @@
                 { id: 2, sku: "AT-TP-001", name: "Silk Wrap Blouse", price: 320000, category: "Tops", img: "https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=800", desc: "Liquid silk that moves with you. Hand-finished seams.", inStock: false },
                 { id: 3, sku: "AT-OW-001", name: "Autumn Trench Coat", price: 650000, category: "Outerwear", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800", desc: "The definitive outerwear piece. Structured yet soft.", inStock: true },
                 { id: 4, sku: "AT-TP-002", name: "Minimalist Camisole", price: 185000, category: "Tops", img: "https://images.unsplash.com/photo-1604176354204-926873ff3da9?w=800", desc: "Masterclass in minimalism. Fine straps.", inStock: true, offer: "Seasonal" },
-                { id: 5, sku: "AT-DR-002", name: "Satin Evening Dress", price: 680000, category: "Dresses", img: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800", desc: "Dramatically draped satin for memorable evenings.", inStock: true }
+                { id: 5, sku: "AT-DR-002", name: "Satin Evening Dress", price: 680000, category: "Dresses", img: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800", desc: "Dramatically draped satin for memorable evenings.", inStock: true },
+                { id: 6, sku: "AT-BT-001", name: "Tailored Trousers", price: 420000, category: "Bottoms", img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800", desc: "High-waisted with a sharp crease.", inStock: true },
+                { id: 7, sku: "AT-KN-001", name: "Cashmere Sweater", price: 550000, category: "Knitwear", img: "https://images.unsplash.com/photo-1574201635302-388dd92a4c3f?w=800", desc: "Ethically sourced Mongolian cashmere.", inStock: true, offer: "New" },
+                { id: 8, sku: "AT-AC-001", name: "Leather Tote Bag", price: 890000, category: "Accessories", img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800", desc: "Full-grain leather with gold hardware.", inStock: true },
+                { id: 9, sku: "AT-DR-003", name: "Floral Midi Dress", price: 395000, category: "Dresses", img: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=800", desc: "Light cotton voile for summer days.", inStock: true },
+                { id: 10, sku: "AT-OW-002", name: "Classic Blazer", price: 580000, category: "Outerwear", img: "https://images.unsplash.com/photo-1591369822096-ffd140ec948f?w=800", desc: "Sharp shoulders and cinched waist.", inStock: true },
+                { id: 11, sku: "AT-FT-001", name: "Leather Loafers", price: 480000, category: "Footwear", img: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=800", desc: "Hand-stitched Italian leather.", inStock: true },
+                { id: 12, sku: "AT-TP-003", name: "Ribbed Tank Top", price: 120000, category: "Tops", img: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800", desc: "Organic cotton with a snug fit.", inStock: true, offer: "BOGO" },
+                { id: 13, sku: "AT-BT-002", name: "Denim Straight Leg", price: 310000, category: "Bottoms", img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800", desc: "Vintage wash with modern comfort.", inStock: true },
+                { id: 14, sku: "AT-AC-002", name: "Silk Scarf", price: 150000, category: "Accessories", img: "https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=800", desc: "Hand-painted botanical patterns.", inStock: true },
+                { id: 15, sku: "AT-KN-002", name: "Oversized Cardigan", price: 460000, category: "Knitwear", img: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=800", desc: "Chunky knit for cozy layering.", inStock: true },
+                { id: 16, sku: "AT-DR-004", name: "Velvet Party Dress", price: 720000, category: "Dresses", img: "https://images.unsplash.com/photo-1539008835657-9e8e81839967?w=800", desc: "Deep emerald velvet with a side slit.", inStock: false },
+                { id: 17, sku: "AT-OW-003", name: "Quilted Puffer", price: 950000, category: "Outerwear", img: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=800", desc: "Water-resistant and down-filled.", inStock: true, offer: "Winter Sale" },
+                { id: 18, sku: "AT-FT-002", name: "Suede Ankle Boots", price: 540000, category: "Footwear", img: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=800", desc: "Pointed toe with a block heel.", inStock: true },
+                { id: 19, sku: "AT-TP-004", name: "Linen Button-Down", price: 280000, category: "Tops", img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800", desc: "Breathable fabric for everyday wear.", inStock: true },
+                { id: 20, sku: "AT-BT-003", name: "Pleated Maxi Skirt", price: 340000, category: "Bottoms", img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=800", desc: "Flowing pleats in a satin finish.", inStock: true },
+                { id: 21, sku: "AT-AC-003", name: "Gold Hoop Earrings", price: 180000, category: "Accessories", img: "https://images.unsplash.com/photo-1535633302703-b0703af08f82?w=800", desc: "18k gold plated, lightweight design.", inStock: true },
+                { id: 22, sku: "AT-DR-005", name: "Boho Maxi Dress", price: 480000, category: "Dresses", img: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=800", desc: "Intricate embroidery and lace details.", inStock: true },
+                { id: 23, sku: "AT-KN-003", name: "Turtleneck Top", price: 210000, category: "Knitwear", img: "https://images.unsplash.com/photo-1616522495341-a12889218961?w=800", desc: "Fine-gauge wool for a sleek look.", inStock: true },
+                { id: 24, sku: "AT-OW-004", name: "Leather Biker Jacket", price: 1200000, category: "Outerwear", img: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800", desc: "Grained leather with silver hardware.", inStock: true, offer: "Premium" },
+                { id: 25, sku: "AT-FT-003", name: "Canvas Sneakers", price: 250000, category: "Footwear", img: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=800", desc: "Classic low-top for casual comfort.", inStock: true }
             ],
             reviews: [
                 { name: "Sarah K.", role: "Verified Collector", text: "Bahannya benar-benar premium. Jahitannya sangat rapi.", avatar: "https://i.pravatar.cc/100?u=sarah", proof: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800" },
@@ -428,7 +589,7 @@
             const div = document.createElement('div');
             div.className = "reveal group cursor-pointer relative";
             div.onclick = () => openModal(p);
-            
+
             const stockStatus = p.inStock ? '' : `
                 <div class="absolute inset-0 z-10 bg-white/40 backdrop-blur-[1px] flex items-center justify-center rounded-3xl">
                     <span class="text-[8px] font-bold uppercase tracking-[0.4em] text-stone-900 border border-stone-900/20 bg-white/80 px-4 py-2 rounded-full">Sold Out</span>
@@ -491,10 +652,10 @@
             const filter = document.getElementById('cat-filter').value;
             const sort = document.getElementById('sort-order').value;
             let items = [...siteData.products];
-            if(filter !== 'all') items = items.filter(i => i.category === filter);
-            if(sort === 'low') items.sort((a,b) => a.price - b.price);
-            if(sort === 'high') items.sort((a,b) => b.price - a.price);
-            
+            if (filter !== 'all') items = items.filter(i => i.category === filter);
+            if (sort === 'low') items.sort((a, b) => a.price - b.price);
+            if (sort === 'high') items.sort((a, b) => b.price - a.price);
+
             const grid = document.getElementById('catalog-grid');
             grid.innerHTML = '';
             items.forEach(p => grid.appendChild(createProductCard(p)));
@@ -508,11 +669,11 @@
                 document.querySelectorAll('main').forEach(m => m.classList.add('hidden'));
                 const target = document.getElementById(`${pageId}-page`);
                 target.classList.remove('hidden');
-                if(pageId === 'catalog') {
+                if (pageId === 'catalog') {
                     document.getElementById('cat-filter').value = catFilter;
                     renderCatalog();
                 }
-                window.scrollTo(0,0);
+                window.scrollTo(0, 0);
                 shutter.classList.remove('active');
                 setTimeout(() => { target.classList.add('opacity-100'); initObservers(); }, 100);
             }, 800);
@@ -524,7 +685,7 @@
             document.getElementById('modal-cat').innerText = p.category;
             document.getElementById('modal-price').innerText = `Rp ${p.price.toLocaleString('id-ID')}`;
             document.getElementById('modal-desc').innerText = p.desc;
-            
+
             const soldOutOverlay = document.getElementById('modal-sold-out');
             const modalBtn = document.getElementById('modal-btn');
             const offerBadge = document.getElementById('modal-offer-badge');
@@ -535,7 +696,7 @@
                 modalBtn.disabled = true;
             } else {
                 soldOutOverlay.classList.add('hidden');
-                modalBtn.innerText = "Check Availability";
+                modalBtn.innerText = "BUY";
                 modalBtn.disabled = false;
             }
 
@@ -572,7 +733,7 @@
 
         function initObservers() {
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('active'); });
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
             }, { threshold: 0.1 });
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
@@ -588,4 +749,5 @@
         };
     </script>
 </body>
+
 </html>
