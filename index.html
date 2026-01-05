@@ -380,7 +380,40 @@
                 </div>
             </div>
         </section>
+        <section class="py-12 bg-gray-50">
+            <div class="max-w-4xl mx-auto px-4">
+                <h2 class="text-2xl font-bold text-center mb-8">How to Order</h2>
 
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div
+                            class="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
+                            1</div>
+                        <h3 class="font-semibold mb-2">Select Product</h3>
+                        <p class="text-gray-600 text-sm">Pick your favorite linen or silk pieces from our catalog.</p>
+                    </div>
+
+                    <div class="text-center">
+                        <div
+                            class="w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h3 class="font-semibold mb-2">Message Us</h3>
+                        <p class="text-gray-600 text-sm">Click the WhatsApp button to send your order request instantly.
+                        </p>
+                    </div>
+
+                    <div class="text-center">
+                        <div
+                            class="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
+                            3</div>
+                        <h3 class="font-semibold mb-2">Fast Delivery</h3>
+                        <p class="text-gray-600 text-sm">We confirm your details and ship your order to your doorstep.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
         <footer class="bg-[#1c1917] text-white pt-40 pb-20 px-8">
             <div class="max-w-7xl mx-auto text-center">
                 <h2 class="text-4xl md:text-8xl brand-font italic mb-20 opacity-90">Ima Asadah</h2>
@@ -698,7 +731,7 @@
                 modalBtn.disabled = true;
             } else {
                 soldOutOverlay.classList.add('hidden');
-                modalBtn.innerText = "BUY";
+                modalBtn.innerText = "Buy via WhatsApp";
                 modalBtn.disabled = false;
             }
 
