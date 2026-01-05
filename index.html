@@ -39,6 +39,22 @@
         .animate-scale { animation: scaleIn 0.3s ease-out forwards; }
 
         .sold-out { filter: grayscale(1); opacity: 0.7; }
+        
+        .custom-pattern {
+            background-color: #fcfaf7;
+            background-image: radial-gradient(#d4a373 0.5px, #fcfaf7 0.5px);
+            background-size: 10px 10px;
+        }
+
+        .category-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .category-card:hover {
+            transform: translateY(-8px);
+        }
+        .category-card:hover img {
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body class="bg-white text-gray-900">
@@ -77,6 +93,93 @@
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <button onclick="switchPage('catalog')" class="bg-white text-black px-10 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-[#d4a373] hover:text-white transition-all">Explore Collection</button>
                     <button onclick="switchPage('owner')" class="bg-transparent border border-white text-white px-10 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-white hover:text-black transition-all">Meet the Designer</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW SECTION: Shop By Category -->
+        <section class="py-20 px-6 max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-[#d4a373] text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Discover Our Style</span>
+                <h2 class="text-4xl md:text-5xl font-bold brand-font">Shop By Category</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Category 1: Dresses -->
+                <div onclick="filterAndNavigate('Dresses')" class="category-card relative group cursor-pointer overflow-hidden rounded-[2rem] aspect-[4/5] md:aspect-square">
+                    <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700" alt="Dresses">
+                    <div class="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors"></div>
+                    <div class="absolute inset-0 p-8 flex flex-col justify-end">
+                        <h3 class="text-white text-3xl font-bold mb-2">Dresses</h3>
+                        <p class="text-white/80 text-sm uppercase tracking-widest font-semibold flex items-center gap-2">
+                            Explore Collection <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </p>
+                    </div>
+                </div>
+                <!-- Category 2: Tops -->
+                <div onclick="filterAndNavigate('Tops')" class="category-card relative group cursor-pointer overflow-hidden rounded-[2rem] aspect-[4/5] md:aspect-square">
+                    <img src="https://images.unsplash.com/photo-1551163943-3f6a855d1153?auto=format&fit=crop&q=80&w=800" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700" alt="Tops">
+                    <div class="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors"></div>
+                    <div class="absolute inset-0 p-8 flex flex-col justify-end">
+                        <h3 class="text-white text-3xl font-bold mb-2">Tops</h3>
+                        <p class="text-white/80 text-sm uppercase tracking-widest font-semibold flex items-center gap-2">
+                            Explore Collection <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </p>
+                    </div>
+                </div>
+                <!-- Category 3: Outerwear -->
+                <div onclick="filterAndNavigate('Outerwear')" class="category-card relative group cursor-pointer overflow-hidden rounded-[2rem] aspect-[4/5] md:aspect-square">
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=800" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700" alt="Outerwear">
+                    <div class="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors"></div>
+                    <div class="absolute inset-0 p-8 flex flex-col justify-end">
+                        <h3 class="text-white text-3xl font-bold mb-2">Outerwear</h3>
+                        <p class="text-white/80 text-sm uppercase tracking-widest font-semibold flex items-center gap-2">
+                            Explore Collection <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Custom Tailoring -->
+        <section class="py-24 custom-pattern overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+                    <div class="order-2 md:order-1 grid grid-cols-2 gap-4">
+                        <div class="space-y-4 pt-12">
+                            <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&q=80&w=400" class="rounded-2xl shadow-lg w-full aspect-[4/5] object-cover" alt="Fabric selection">
+                            <img src="https://images.unsplash.com/photo-1556905055-8f358a7a4bb4?auto=format&fit=crop&q=80&w=400" class="rounded-2xl shadow-lg w-full aspect-square object-cover" alt="Measurement process">
+                        </div>
+                        <div class="space-y-4">
+                            <img src="https://images.unsplash.com/photo-1520006403909-838d6b92c22e?auto=format&fit=crop&q=80&w=400" class="rounded-2xl shadow-lg w-full aspect-square object-cover" alt="Sewing machine">
+                            <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=400" class="rounded-2xl shadow-lg w-full aspect-[4/5] object-cover" alt="Finished custom dress">
+                        </div>
+                    </div>
+                    <div class="order-1 md:order-2 space-y-8">
+                        <div>
+                            <span class="text-[#d4a373] text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Personalized Service</span>
+                            <h2 class="text-4xl md:text-5xl font-bold brand-font mb-6 leading-tight">Custom Tailoring Experience</h2>
+                            <p class="text-gray-600 leading-relaxed text-lg">Wujudkan pakaian impian yang dirancang khusus mengikuti bentuk tubuh dan preferensi gaya Anda. Kami membantu Anda memilih material terbaik hingga detail jahitan terkecil.</p>
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="flex items-center gap-4 text-gray-700">
+                                <div class="bg-white p-2 rounded-full shadow-sm"><i data-lucide="check" class="w-4 h-4 text-[#d4a373]"></i></div>
+                                <span>Konsultasi Desain Gratis</span>
+                            </li>
+                            <li class="flex items-center gap-4 text-gray-700">
+                                <div class="bg-white p-2 rounded-full shadow-sm"><i data-lucide="check" class="w-4 h-4 text-[#d4a373]"></i></div>
+                                <span>Pilihan Material Premium</span>
+                            </li>
+                            <li class="flex items-center gap-4 text-gray-700">
+                                <div class="bg-white p-2 rounded-full shadow-sm"><i data-lucide="check" class="w-4 h-4 text-[#d4a373]"></i></div>
+                                <span>Fitting Tak Terbatas hingga Sempurna</span>
+                            </li>
+                        </ul>
+                        <div class="pt-4">
+                            <button onclick="orderWhatsApp()" class="bg-stone-900 text-white px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#d4a373] transition-all flex items-center gap-3">
+                                Start Custom Project <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -371,6 +474,16 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // Specific function to navigate and auto-filter catalog
+        function filterAndNavigate(category) {
+            const filterEl = document.getElementById('cat-filter');
+            if (filterEl) {
+                filterEl.value = category;
+            }
+            switchPage('catalog');
+            renderCatalog();
+        }
+
         function createProductCard(p, isDark = false) {
             const card = document.createElement('div');
             const isSoldOut = p.stock === 0;
@@ -500,8 +613,12 @@
         }
 
         function orderWhatsApp() {
-            if (!activeProduct || activeProduct.stock === 0) return;
-            const text = `Halo Ima Asadah! Saya tertarik dengan "${activeProduct.name}". Bisakah saya berkonsultasi tentang ukuran?`;
+            let text = "Halo Ima Asadah! Saya ingin bertanya tentang layanan Anda.";
+            if (activeProduct && activeProduct.stock > 0) {
+                text = `Halo Ima Asadah! Saya tertarik dengan "${activeProduct.name}". Bisakah saya berkonsultasi tentang ukuran?`;
+            } else {
+                text = `Halo Ima Asadah! Saya tertarik untuk memulai proyek Custom Tailoring. Bisakah kita jadwalkan konsultasi?`;
+            }
             window.open(`https://wa.me/6285732335094?text=${encodeURIComponent(text)}`, '_blank');
         }
 
