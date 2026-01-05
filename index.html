@@ -538,25 +538,27 @@
     <script>
         const siteData = {
             categories: [
-                { name: "Dresses", type: "Curated", img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800" },
-                { name: "Tops", type: "Essential", img: "https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=800", shifted: true },
-                { name: "Outerwear", type: "Timeless", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800" }
+                { name: "Dresses", type: "Curated", img: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=800" },
+                { name: "Tops", type: "Essential", img: "https://images.unsplash.com/photo-1598554747436-c9293d6a588f?w=800", shifted: true },
+                { name: "Outerwear", type: "Timeless", img: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=800" },
+                { name: "Accessories", type: "Refined", img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800" },
+                { name: "Footwear", type: "Modern", img: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=800" }
             ],
             products: [
-                { id: 1, sku: "AT-DR-001", name: "Linen Gathered Dress", price: 450000, category: "Dresses", img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800", desc: "A breathable, fluid silhouette handcrafted from sustainably sourced linen.", inStock: true, offer: "15% OFF" },
-                { id: 2, sku: "AT-TP-001", name: "Silk Wrap Blouse", price: 320000, category: "Tops", img: "https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=800", desc: "Liquid silk that moves with you. Hand-finished seams.", inStock: false },
-                { id: 3, sku: "AT-OW-001", name: "Autumn Trench Coat", price: 650000, category: "Outerwear", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800", desc: "The definitive outerwear piece. Structured yet soft.", inStock: true },
-                { id: 4, sku: "AT-TP-002", name: "Minimalist Camisole", price: 185000, category: "Tops", img: "https://images.unsplash.com/photo-1604176354204-926873ff3da9?w=800", desc: "Masterclass in minimalism. Fine straps.", inStock: true, offer: "Seasonal" },
+                { id: 1, sku: "AT-DR-001", name: "Linen Gathered Dress", price: 450000, category: "Dresses", img: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=800", desc: "A breathable, fluid silhouette handcrafted from sustainably sourced linen.", inStock: true, offer: "15% OFF" },
+                { id: 2, sku: "AT-TP-001", name: "Silk Wrap Blouse", price: 320000, category: "Tops", img: "https://images.unsplash.com/photo-1604176354204-926873ff3da9?w=800", desc: "Liquid silk that moves with you. Hand-finished seams.", inStock: false },
+                { id: 3, sku: "AT-OW-001", name: "Autumn Trench Coat", price: 650000, category: "Outerwear", img: "https://images.unsplash.com/photo-1585060544812-6b45742d762f?w=800", desc: "The definitive outerwear piece. Structured yet soft.", inStock: true },
+                { id: 4, sku: "AT-TP-002", name: "Minimalist Camisole", price: 185000, category: "Tops", img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800", desc: "Masterclass in minimalism. Fine straps.", inStock: true, offer: "Seasonal" },
                 { id: 5, sku: "AT-DR-002", name: "Satin Evening Dress", price: 680000, category: "Dresses", img: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800", desc: "Dramatically draped satin for memorable evenings.", inStock: true },
-                { id: 6, sku: "AT-BT-001", name: "Tailored Trousers", price: 420000, category: "Bottoms", img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800", desc: "High-waisted with a sharp crease.", inStock: true },
-                { id: 7, sku: "AT-KN-001", name: "Cashmere Sweater", price: 550000, category: "Knitwear", img: "https://images.unsplash.com/photo-1574201635302-388dd92a4c3f?w=800", desc: "Ethically sourced Mongolian cashmere.", inStock: true, offer: "New" },
+                { id: 6, sku: "AT-BT-001", name: "Tailored Trousers", price: 420000, category: "Bottoms", img: "https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?w=800", desc: "High-waisted with a sharp crease.", inStock: true },
+                { id: 7, sku: "AT-KN-001", name: "Cashmere Sweater", price: 550000, category: "Knitwear", img: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800", desc: "Ethically sourced Mongolian cashmere.", inStock: true, offer: "New" },
                 { id: 8, sku: "AT-AC-001", name: "Leather Tote Bag", price: 890000, category: "Accessories", img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800", desc: "Full-grain leather with gold hardware.", inStock: true },
                 { id: 9, sku: "AT-DR-003", name: "Floral Midi Dress", price: 395000, category: "Dresses", img: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=800", desc: "Light cotton voile for summer days.", inStock: true },
                 { id: 10, sku: "AT-OW-002", name: "Classic Blazer", price: 580000, category: "Outerwear", img: "https://images.unsplash.com/photo-1591369822096-ffd140ec948f?w=800", desc: "Sharp shoulders and cinched waist.", inStock: true },
                 { id: 11, sku: "AT-FT-001", name: "Leather Loafers", price: 480000, category: "Footwear", img: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=800", desc: "Hand-stitched Italian leather.", inStock: true },
                 { id: 12, sku: "AT-TP-003", name: "Ribbed Tank Top", price: 120000, category: "Tops", img: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800", desc: "Organic cotton with a snug fit.", inStock: true, offer: "BOGO" },
                 { id: 13, sku: "AT-BT-002", name: "Denim Straight Leg", price: 310000, category: "Bottoms", img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800", desc: "Vintage wash with modern comfort.", inStock: true },
-                { id: 14, sku: "AT-AC-002", name: "Silk Scarf", price: 150000, category: "Accessories", img: "https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=800", desc: "Hand-painted botanical patterns.", inStock: true },
+                { id: 14, sku: "AT-AC-002", name: "Silk Scarf", price: 150000, category: "Accessories", img: "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=800", desc: "Hand-painted botanical patterns.", inStock: true },
                 { id: 15, sku: "AT-KN-002", name: "Oversized Cardigan", price: 460000, category: "Knitwear", img: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=800", desc: "Chunky knit for cozy layering.", inStock: true },
                 { id: 16, sku: "AT-DR-004", name: "Velvet Party Dress", price: 720000, category: "Dresses", img: "https://images.unsplash.com/photo-1539008835657-9e8e81839967?w=800", desc: "Deep emerald velvet with a side slit.", inStock: false },
                 { id: 17, sku: "AT-OW-003", name: "Quilted Puffer", price: 950000, category: "Outerwear", img: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=800", desc: "Water-resistant and down-filled.", inStock: true, offer: "Winter Sale" },
