@@ -37,6 +37,8 @@
             to { transform: scale(1); opacity: 1; }
         }
         .animate-scale { animation: scaleIn 0.3s ease-out forwards; }
+
+        .sold-out { filter: grayscale(1); opacity: 0.7; }
     </style>
 </head>
 <body class="bg-white text-gray-900">
@@ -79,7 +81,7 @@
             </div>
         </section>
 
-        <!-- Special Offers Category (NEW) -->
+        <!-- Special Offers Category -->
         <section class="py-16 bg-stone-900 text-white overflow-hidden">
             <div class="max-w-7xl mx-auto px-6">
                 <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
@@ -245,6 +247,16 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Social Media Links -->
+                    <div class="pt-4">
+                        <p class="text-[10px] uppercase tracking-widest font-bold text-gray-400 mb-4">Follow Our Journey</p>
+                        <div class="flex gap-4">
+                            <a href="#" class="w-10 h-10 bg-stone-900 text-white rounded-full flex items-center justify-center hover:bg-[#d4a373] transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                            <a href="#" class="w-10 h-10 bg-stone-900 text-white rounded-full flex items-center justify-center hover:bg-[#d4a373] transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                            <a href="#" class="w-10 h-10 bg-stone-900 text-white rounded-full flex items-center justify-center hover:bg-[#d4a373] transition-colors"><i data-lucide="music-2" class="w-5 h-5"></i></a>
+                        </div>
+                    </div>
                 </div>
                 <div class="h-[400px] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
                     <iframe 
@@ -260,21 +272,28 @@
     <div id="product-modal" class="modal-overlay fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl relative flex flex-col md:flex-row animate-scale">
             <button onclick="closeModal()" class="absolute top-4 right-4 z-10 bg-white/80 p-2 rounded-full hover:bg-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-            <div class="w-full md:w-1/2 aspect-square">
+            <div class="w-full md:w-1/2 aspect-square relative">
                 <img id="modal-img" src="" class="w-full h-full object-cover">
+                <div id="modal-sold-overlay" class="absolute inset-0 bg-white/60 backdrop-blur-[2px] hidden flex items-center justify-center">
+                    <span class="bg-red-600 text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest transform -rotate-12 shadow-xl border-4 border-white">Sold Out</span>
+                </div>
             </div>
             <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-                <div id="modal-tag" class="hidden mb-4">
-                    <span class="bg-[#d4a373] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">Limited Offer</span>
+                <div class="flex justify-between items-start mb-4">
+                    <div id="modal-tag" class="hidden">
+                        <span class="bg-[#d4a373] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">Limited Offer</span>
+                    </div>
+                    <span id="modal-stock-badge" class="text-[10px] font-bold px-3 py-1 rounded-full uppercase border">Stock: 0</span>
                 </div>
                 <h3 id="modal-title" class="text-3xl font-bold mb-2">Product Title</h3>
                 <p id="modal-price" class="text-xl text-[#d4a373] font-semibold mb-6">Rp 0</p>
                 <div class="text-gray-600 text-sm leading-relaxed mb-8 space-y-4">
                     <p id="modal-desc">Detailed product description goes here...</p>
                 </div>
-                <button onclick="orderWhatsApp()" class="w-full bg-black text-white py-4 rounded-full font-bold hover:bg-[#d4a373] transition-colors flex items-center justify-center gap-2">
-                    <i data-lucide="message-circle" class="w-5 h-5"></i> Order via WhatsApp
+                <button id="modal-order-btn" onclick="orderWhatsApp()" class="w-full bg-black text-white py-4 rounded-full font-bold hover:bg-[#d4a373] transition-colors flex items-center justify-center gap-2 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i> <span id="btn-text">Order via WhatsApp</span>
                 </button>
+                <p id="modal-stock-warning" class="text-center text-xs text-red-500 font-bold mt-4 hidden">Maaf, produk ini sedang tidak tersedia.</p>
             </div>
         </div>
     </div>
@@ -286,12 +305,12 @@
 
     <script>
         const products = [
-            { id: 1, name: "Linen Gathered Dress", price: 450000, oldPrice: 550000, category: "Dresses", img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600", offer: true, desc: "Dress premium dari bahan linen pilihan yang sejuk dan jatuh. Cocok untuk acara outdoor maupun casual gathering." },
-            { id: 2, name: "Silk Wrap Blouse", price: 320000, oldPrice: null, category: "Tops", img: "https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=600", offer: false, desc: "Blouse sutra dengan model wrap yang elegan, memberikan kesan mewah dan feminin." },
-            { id: 3, name: "Autumn Trench Coat", price: 650000, oldPrice: 780000, category: "Outerwear", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600", offer: true, desc: "Outerwear ikonik untuk tampilan profesional. Tahan angin dan stylish di segala suasana." },
-            { id: 4, name: "Minimalist Camisole", price: 185000, oldPrice: null, category: "Tops", img: "https://images.unsplash.com/photo-1604176354204-926873ff3da9?w=600", offer: false, desc: "Basic camisole yang wajib dimiliki. Nyaman digunakan sebagai dalaman atau atasan casual." },
-            { id: 5, name: "Pleated Midi Skirt", price: 295000, oldPrice: null, category: "Bottoms", img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600", offer: false, desc: "Rok plisket dengan potongan midi yang timeless. Mudah dipadupadankan." },
-            { id: 6, name: "Satin Evening Dress", price: 680000, oldPrice: 850000, category: "Dresses", img: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=600", offer: true, desc: "Koleksi pesta eksklusif dengan detail satin mengkilap yang memikat perhatian." }
+            { id: 1, name: "Linen Gathered Dress", price: 450000, oldPrice: 550000, category: "Dresses", img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600", offer: true, stock: 12, desc: "Dress premium dari bahan linen pilihan yang sejuk dan jatuh. Cocok untuk acara outdoor maupun casual gathering." },
+            { id: 2, name: "Silk Wrap Blouse", price: 320000, oldPrice: null, category: "Tops", img: "https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=600", offer: false, stock: 0, desc: "Blouse sutra dengan model wrap yang elegan, memberikan kesan mewah dan feminin." },
+            { id: 3, name: "Autumn Trench Coat", price: 650000, oldPrice: 780000, category: "Outerwear", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600", offer: true, stock: 5, desc: "Outerwear ikonik untuk tampilan profesional. Tahan angin dan stylish di segala suasana." },
+            { id: 4, name: "Minimalist Camisole", price: 185000, oldPrice: null, category: "Tops", img: "https://images.unsplash.com/photo-1604176354204-926873ff3da9?w=600", offer: false, stock: 24, desc: "Basic camisole yang wajib dimiliki. Nyaman digunakan sebagai dalaman atau atasan casual." },
+            { id: 5, name: "Pleated Midi Skirt", price: 295000, oldPrice: null, category: "Bottoms", img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600", offer: false, stock: 0, desc: "Rok plisket dengan potongan midi yang timeless. Mudah dipadupadankan." },
+            { id: 6, name: "Satin Evening Dress", price: 680000, oldPrice: 850000, category: "Dresses", img: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=600", offer: true, stock: 2, desc: "Koleksi pesta eksklusif dengan detail satin mengkilap yang memikat perhatian." }
         ];
 
         const reviews = [
@@ -354,7 +373,8 @@
 
         function createProductCard(p, isDark = false) {
             const card = document.createElement('div');
-            card.className = "product-card group cursor-pointer animate-scale";
+            const isSoldOut = p.stock === 0;
+            card.className = `product-card group cursor-pointer animate-scale ${isSoldOut ? 'opacity-80' : ''}`;
             card.onclick = () => openModal(p);
             
             const priceHtml = p.oldPrice 
@@ -364,16 +384,24 @@
                    </div>`
                 : `<p class="text-[#d4a373] font-semibold text-sm">Rp ${p.price.toLocaleString()}</p>`;
 
+            const stockHtml = isSoldOut 
+                ? `<span class="text-[9px] font-bold text-red-500 uppercase tracking-widest bg-red-50 px-2 py-0.5 rounded">Sold Out</span>`
+                : `<span class="text-[9px] font-bold text-green-600 uppercase tracking-widest bg-green-50 px-2 py-0.5 rounded">${p.stock} Available</span>`;
+
             card.innerHTML = `
                 <div class="relative aspect-[3/4] overflow-hidden rounded-2xl ${isDark ? 'bg-stone-800' : 'bg-gray-100'} mb-4">
-                    <img src="${p.img}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    ${p.offer ? `<div class="absolute top-4 left-4 bg-[#d4a373] text-white text-[9px] font-bold px-3 py-1 rounded-full uppercase">Save Rp ${(p.oldPrice - p.price).toLocaleString()}</div>` : ''}
+                    <img src="${p.img}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${isSoldOut ? 'grayscale contrast-75' : ''}">
+                    ${p.offer && !isSoldOut ? `<div class="absolute top-4 left-4 bg-[#d4a373] text-white text-[9px] font-bold px-3 py-1 rounded-full uppercase">Save Rp ${(p.oldPrice - p.price).toLocaleString()}</div>` : ''}
+                    ${isSoldOut ? `<div class="absolute inset-0 bg-white/40 backdrop-blur-[1px] flex items-center justify-center"><span class="bg-black text-white px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest">HABIS</span></div>` : ''}
                     <div class="quick-view absolute inset-0 bg-black/20 flex items-center justify-center">
                         <span class="bg-white text-black px-6 py-2 rounded-full text-[10px] font-bold uppercase shadow-xl">Quick View</span>
                     </div>
                 </div>
                 <div class="px-1">
-                    <p class="text-[10px] ${isDark ? 'text-gray-500' : 'text-gray-400'} uppercase tracking-widest mb-1">${p.category}</p>
+                    <div class="flex justify-between items-center mb-1">
+                        <p class="text-[10px] ${isDark ? 'text-gray-500' : 'text-gray-400'} uppercase tracking-widest">${p.category}</p>
+                        ${stockHtml}
+                    </div>
                     <h3 class="font-bold text-sm mb-1 truncate ${isDark ? 'text-white' : 'text-black'}">${p.name}</h3>
                     ${priceHtml}
                 </div>
@@ -435,9 +463,23 @@
 
         function openModal(p) {
             activeProduct = p;
+            const isSoldOut = p.stock === 0;
+            
             document.getElementById('modal-img').src = p.img;
             document.getElementById('modal-title').innerText = p.name;
             
+            // Stock logic
+            const stockBadge = document.getElementById('modal-stock-badge');
+            stockBadge.innerText = isSoldOut ? 'Out of Stock' : `Available: ${p.stock}`;
+            stockBadge.className = `text-[10px] font-bold px-3 py-1 rounded-full uppercase border ${isSoldOut ? 'border-red-200 text-red-500 bg-red-50' : 'border-green-200 text-green-600 bg-green-50'}`;
+            
+            document.getElementById('modal-sold-overlay').style.display = isSoldOut ? 'flex' : 'none';
+            document.getElementById('modal-stock-warning').style.display = isSoldOut ? 'block' : 'none';
+            
+            const orderBtn = document.getElementById('modal-order-btn');
+            orderBtn.disabled = isSoldOut;
+            document.getElementById('btn-text').innerText = isSoldOut ? 'Out of Stock' : 'Order via WhatsApp';
+
             const priceEl = document.getElementById('modal-price');
             if (p.oldPrice) {
                 priceEl.innerHTML = `Rp ${p.price.toLocaleString()} <span class="text-gray-400 text-sm line-through ml-2 font-normal">Rp ${p.oldPrice.toLocaleString()}</span>`;
@@ -446,7 +488,7 @@
             }
 
             document.getElementById('modal-desc').innerText = p.desc;
-            document.getElementById('modal-tag').style.display = p.offer ? 'block' : 'none';
+            document.getElementById('modal-tag').style.display = (p.offer && !isSoldOut) ? 'block' : 'none';
             document.getElementById('product-modal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
             lucide.createIcons();
@@ -458,7 +500,7 @@
         }
 
         function orderWhatsApp() {
-            if (!activeProduct) return;
+            if (!activeProduct || activeProduct.stock === 0) return;
             const text = `Halo Ima Asadah! Saya tertarik dengan "${activeProduct.name}". Bisakah saya berkonsultasi tentang ukuran?`;
             window.open(`https://wa.me/6285732335094?text=${encodeURIComponent(text)}`, '_blank');
         }
